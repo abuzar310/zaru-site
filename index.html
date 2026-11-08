@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zaru Launcher</title>
+  <meta name="description" content="Zaru Launcher is a Windows Minecraft launcher. It uses the Millida code and their login, Discord, and backend.">
+  <style>
+    :root {
+      --ink: #12140f;
+      --paper: #f4f1e8;
+      --muted: #5c6154;
+      --line: #d9d3c4;
+      --accent: #1f6b3a;
+      --accent-ink: #f4f1e8;
+      --warn: #8a5a12;
+      --warn-bg: #f3e6c8;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 420px at 100% -10%, #e7f0dc 0%, transparent 55%),
+        var(--paper);
+    }
+    main {
+      width: min(720px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0 64px;
+    }
+    .mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(44px, 8vw, 72px);
+      line-height: 0.92;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+    .lede {
+      margin: 0;
+      max-width: 38em;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 28px;
+      min-height: 56px;
+      padding: 0 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--accent-ink);
+      text-decoration: none;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .download:hover { background: #174f2b; }
+    .meta {
+      margin: 10px 0 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    section {
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+    h2 {
+      margin: 0 0 16px;
+      font-size: 22px;
+      font-weight: 500;
+    }
+    ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+    li {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: start;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+    .n {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-weight: 700;
+    }
+    .note {
+      margin-top: 28px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: var(--warn-bg);
+      color: var(--warn);
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    footer {
+      margin-top: 36px;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    footer a { color: inherit; }
+    code {
+      font-family: Consolas, ui-monospace, monospace;
+      font-size: 0.92em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="mark"><span class="dot"></span> Windows</div>
+    <h1>Zaru Launcher</h1>
+    <p class="lede">A Minecraft launcher for Windows. It uses the Millida code and their login, Discord, and backend.</p>
+    <a class="download" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
+    <p class="meta">Zaru Launcher 99.0.0 · 64-bit setup · about 57 MB</p>
+
+    <section>
+      <h2>Install</h2>
+      <ol>
+        <li><span class="n">1</span><span>Download the setup file.</span></li>
+        <li><span class="n">2</span><span>If your browser saves it inside a zip, unzip it first.</span></li>
+        <li><span class="n">3</span><span>Run <code>Zaru.Launcher_99.0.0_x64-setup.exe</code>.</span></li>
+        <li><span class="n">4</span><span>If Windows says it protected your PC, choose <strong>More info</strong>, then <strong>Run anyway</strong>.</span></li>
+      </ol>
+      <p class="note">This is a personal unsigned build. Windows shows that warning because the installer is not code-signed. That is expected.</p>
+    </section>
+
+    <footer>
+      Zaru Launcher is a personal build based on <a href="https://github.com/millida/launcher">Millida Launcher</a> (GPL-3.0). It is not made, approved, or supported by Millida, and it is not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang.
+    </footer>
+  </main>
+</body>
+</html>
