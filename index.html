@@ -79,6 +79,7 @@
       font-weight: 700;
     }
     .download:hover { background: #174f2b; }
+    .downloads { display: flex; flex-wrap: wrap; gap: 12px; }
     .meta {
       margin: 10px 0 0;
       font-family: "Segoe UI", system-ui, sans-serif;
@@ -147,18 +148,21 @@
 </head>
 <body>
   <main>
-    <div class="mark"><span class="dot"></span> Windows</div>
+    <div class="mark"><span class="dot"></span> Windows and Linux</div>
     <h1>Zaru Launcher</h1>
-    <p class="lede">A Minecraft launcher for Windows. It uses the Millida code and their login, Discord, and backend.</p>
-    <a class="download" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
-    <p class="meta">Zaru Launcher 99.0.0 · 64-bit setup · about 57 MB</p>
+    <p class="lede">A Minecraft launcher for Windows and Linux. It uses the Millida code and their login, Discord, and backend.</p>
+    <div class="downloads">
+      <a class="download" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
+      <a class="download" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_amd64.deb">Download for Linux</a>
+    </div>
+    <p class="meta">Version 99.0.0 · Windows setup about 57 MB · Linux .deb about 62 MB</p>
 
     <section>
       <h2>Install</h2>
       <ol>
         <li><span class="n">1</span><span>Download the setup file.</span></li>
         <li><span class="n">2</span><span>If your browser saves it inside a zip, unzip it first.</span></li>
-        <li><span class="n">3</span><span>Run <code>Zaru.Launcher_99.0.0_x64-setup.exe</code>.</span></li>
+        <li><span class="n">3</span><span>Windows: run <code>Zaru.Launcher_99.0.0_x64-setup.exe</code>. Linux: install <code>Zaru.Launcher_99.0.0_amd64.deb</code>, then open Zaru Launcher.</span></li>
         <li><span class="n">4</span><span>If Windows says it protected your PC, choose <strong>More info</strong>, then <strong>Run anyway</strong>.</span></li>
       </ol>
       <p class="note">This is a personal unsigned build. Windows shows that warning because the installer is not code-signed. That is expected.</p>
