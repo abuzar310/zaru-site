@@ -3,174 +3,460 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Zaru Launcher</title>
-  <meta name="description" content="Zaru Launcher is a Windows Minecraft launcher. It uses the Millida code and their login, Discord, and backend.">
+  <title>Zaru Launcher — Minecraft for Windows and Linux</title>
+  <meta name="description" content="Zaru Launcher installs Minecraft, Java, and a Fabric starter pack. Play with a Microsoft account or a nickname. Windows and Linux.">
+  <meta property="og:title" content="Zaru Launcher">
+  <meta property="og:description" content="Minecraft, ready to play. Microsoft account or a nickname. Windows and Linux.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#07110c">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2307110c'/%3E%3Cpath d='M7 8h12v5H14v3h5v5h-5v3H7V8z' fill='%23c6f54e'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #12140f;
-      --paper: #f4f1e8;
-      --muted: #5c6154;
-      --line: #d9d3c4;
-      --accent: #1f6b3a;
-      --accent-ink: #f4f1e8;
-      --warn: #8a5a12;
-      --warn-bg: #f3e6c8;
+      --bg: #07110c;
+      --bg-raise: #0d1913;
+      --card: rgba(16, 32, 24, 0.86);
+      --line: rgba(198, 245, 78, 0.16);
+      --line-strong: rgba(243, 247, 239, 0.12);
+      --lime: #c6f54e;
+      --lime-deep: #10240a;
+      --text: #f4f7ef;
+      --muted: #a9b8a6;
+      --warn: #f3d48a;
+      --warn-bg: rgba(243, 212, 138, 0.08);
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      --nav: 72px;
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      min-height: 100vh;
-      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
-      color: var(--ink);
+      margin: 0;
+      color: var(--text);
       background:
-        radial-gradient(900px 420px at 100% -10%, #e7f0dc 0%, transparent 55%),
-        var(--paper);
+        radial-gradient(900px 480px at 85% -10%, rgba(198, 245, 78, 0.16), transparent 55%),
+        radial-gradient(700px 420px at -10% 20%, rgba(40, 110, 70, 0.35), transparent 50%),
+        var(--bg);
+      font-family: Outfit, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.5;
     }
-    main {
-      width: min(720px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 48px 0 64px;
+    body::before {
+      content: "";
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 75%);
     }
-    .mark {
+    a { color: inherit; }
+    img { max-width: 100%; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: var(--nav);
+      display: flex;
+      align-items: center;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 17, 12, 0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav .wrap { display: flex; align-items: center; }
+    .brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 700;
-    }
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-    h1 {
-      margin: 18px 0 12px;
-      font-size: clamp(44px, 8vw, 72px);
-      line-height: 0.92;
-      font-weight: 500;
+      text-decoration: none;
+      font-family: Syne, Outfit, sans-serif;
+      font-weight: 800;
       letter-spacing: -0.03em;
     }
-    .lede {
-      margin: 0;
-      max-width: 38em;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 18px;
-      line-height: 1.5;
-      color: var(--muted);
+    .mark {
+      width: 28px;
+      height: 28px;
+      margin-right: 10px;
+      border-radius: 8px;
+      background: var(--lime);
+      color: var(--lime-deep);
+      display: inline-block;
+      text-align: center;
+      line-height: 28px;
+      font-weight: 800;
     }
-    .download {
+    .nav-links { display: flex; margin-left: auto; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; margin-left: 22px; }
+    .nav-links a:hover { color: var(--text); }
+    .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin-top: 28px;
-      min-height: 56px;
-      padding: 0 22px;
+      gap: 8px;
+      min-height: 48px;
+      padding: 0 18px;
       border-radius: 999px;
-      background: var(--accent);
-      color: var(--accent-ink);
       text-decoration: none;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 17px;
       font-weight: 700;
+      border: 1px solid transparent;
     }
-    .download:hover { background: #174f2b; }
-    .downloads { display: flex; flex-wrap: wrap; gap: 12px; }
-    .meta {
-      margin: 10px 0 0;
-      font-family: "Segoe UI", system-ui, sans-serif;
+    .btn-lime { background: var(--lime); color: var(--lime-deep); }
+    .btn-lime:hover { background: #d6ff78; }
+    .btn-ghost { background: transparent; color: var(--text); border-color: var(--line-strong); }
+    .btn-ghost:hover { border-color: var(--lime); }
+    .btn-nav { min-height: 40px; padding: 0 14px; margin-left: 22px; font-size: 14px; }
+    .hero { padding: 72px 0 36px; }
+    .hero-grid { display: flex; flex-wrap: wrap; align-items: center; }
+    .hero-grid > div:first-child { flex: 1 1 480px; margin-right: 48px; }
+    .hero-grid > .panel { flex: 1 1 380px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 6px 10px 6px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--lime);
       font-size: 13px;
-      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
-    section {
-      margin-top: 40px;
-      padding-top: 28px;
-      border-top: 1px solid var(--line);
-    }
-    h2 {
-      margin: 0 0 16px;
-      font-size: 22px;
-      font-weight: 500;
-    }
-    ol {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 12px;
-    }
-    li {
-      display: grid;
-      grid-template-columns: 32px 1fr;
-      gap: 12px;
-      align-items: start;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 16px;
-      line-height: 1.45;
-    }
-    .n {
-      width: 32px;
-      height: 32px;
+    .pulse {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 0 4px rgba(198, 245, 78, 0.15);
+    }
+    h1, h2, h3 { font-family: Syne, Outfit, sans-serif; letter-spacing: -0.04em; margin: 0; }
+    h1 { font-size: clamp(48px, 6vw, 76px); line-height: 0.92; font-weight: 800; }
+    .lede { margin: 20px 0 0; max-width: 38rem; color: var(--muted); font-size: 18px; }
+    .cta-row { display: flex; flex-wrap: wrap; margin-top: 28px; }
+    .cta-row .btn { margin: 0 12px 12px 0; }
+    .meta { margin: 14px 0 0; color: var(--muted); font-size: 14px; }
+    .panel {
+      background: linear-gradient(180deg, rgba(22, 42, 30, 0.95), rgba(10, 20, 15, 0.95));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .panel-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .dots { display: flex; gap: 6px; }
+    .dots i { width: 8px; height: 8px; border-radius: 50%; background: #2a3b30; display: block; }
+    .dots i:first-child { background: var(--lime); }
+    .panel-body { padding: 22px; display: grid; gap: 14px; }
+    .account, .instance, .play {
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .account, .instance { padding: 14px 16px; background: rgba(0,0,0,0.22); }
+    .kicker { display: block; color: var(--muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .account strong, .instance strong { display: block; margin-top: 4px; font-size: 18px; }
+    .play {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 18px;
+      background: linear-gradient(180deg, #d8ff73, var(--lime));
+      color: var(--lime-deep);
+    }
+    .play b { font-family: Syne, sans-serif; font-size: 28px; letter-spacing: -0.04em; }
+    .play span { font-size: 13px; font-weight: 700; }
+    .strip { padding: 10px 0 20px; }
+    .strip-row {
+      display: flex;
+      flex-wrap: wrap;
+      border: 1px solid var(--line-strong);
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.02);
+    }
+    .strip-row div { flex: 1 1 220px; padding: 18px 20px; border-right: 1px solid var(--line-strong); }
+    .strip-row b { display: block; font-size: 15px; }
+    .strip-row span { color: var(--muted); font-size: 13px; }
+    section { padding: 72px 0; }
+    .section-head { max-width: 640px; margin-bottom: 28px; }
+    .section-head p { margin: 12px 0 0; color: var(--muted); }
+    h2 { font-size: clamp(32px, 4vw, 48px); line-height: 1; }
+    .cards { display: flex; flex-wrap: wrap; }
+    .cards .card { flex: 1 1 46%; max-width: calc(50% - 16px); margin: 0 16px 16px 0; }
+    .card {
+      padding: 24px;
+      border-radius: 22px;
+      background: var(--card);
+      border: 1px solid var(--line-strong);
+    }
+    .card h3 { font-size: 24px; margin-bottom: 8px; }
+    .card p { margin: 0; color: var(--muted); }
+    .index {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 16px;
+      border-radius: 10px;
       display: grid;
       place-items: center;
-      background: #fff;
-      border: 1px solid var(--line);
+      background: rgba(198, 245, 78, 0.12);
+      color: var(--lime);
       font-weight: 700;
     }
+    .split { display: flex; flex-wrap: wrap; align-items: flex-start; }
+    .split > * { flex: 1 1 300px; margin-right: 28px; }
+    .list { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+    .list li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 12px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line-strong);
+    }
+    .tick { color: var(--lime); font-weight: 800; }
+    .os-grid { display: flex; flex-wrap: wrap; }
+    .os { flex: 1 1 300px; margin: 0 16px 16px 0; }
+    .os {
+      padding: 28px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(198,245,78,0.08), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 260px;
+    }
+    .os .btn { margin-top: auto; align-self: flex-start; }
+    .os p { margin: 0; color: var(--muted); }
+    .steps { display: flex; flex-wrap: wrap; }
+    .step { flex: 1 1 200px; margin: 0 14px 14px 0; }
+    .step {
+      padding: 20px;
+      border-radius: 20px;
+      background: var(--bg-raise);
+      border: 1px solid var(--line-strong);
+    }
+    .step b { display: block; color: var(--lime); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
     .note {
-      margin-top: 28px;
+      margin-top: 18px;
       padding: 16px 18px;
       border-radius: 16px;
       background: var(--warn-bg);
       color: var(--warn);
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 15px;
-      line-height: 1.5;
+      border: 1px solid rgba(243, 212, 138, 0.2);
     }
+    details {
+      border-bottom: 1px solid var(--line-strong);
+      padding: 16px 0;
+    }
+    summary { cursor: pointer; font-weight: 600; font-size: 18px; }
+    details p { margin: 10px 0 0; color: var(--muted); max-width: 68ch; }
     footer {
-      margin-top: 36px;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 13px;
-      line-height: 1.5;
+      padding: 28px 0 48px;
       color: var(--muted);
+      font-size: 14px;
+      border-top: 1px solid var(--line-strong);
     }
-    footer a { color: inherit; }
-    code {
-      font-family: Consolas, ui-monospace, monospace;
-      font-size: 0.92em;
+    footer a { color: var(--text); }
+    code { font-family: ui-monospace, Consolas, monospace; font-size: 0.92em; }
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .nav .wrap { justify-content: space-between; }
+      .nav .btn-nav { margin-left: 16px; }
+      .cards .card, .os { max-width: 100%; flex-basis: 100%; }
+      .hero-grid > div:first-child { margin-right: 0; }
+      .hero { padding-top: 36px; }
+      h1 { font-size: 46px; }
+      .wrap { width: min(1120px, calc(100% - 28px)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
     }
   </style>
 </head>
 <body>
-  <main>
-    <div class="mark"><span class="dot"></span> Windows and Linux</div>
-    <h1>Zaru Launcher</h1>
-    <p class="lede">A Minecraft launcher for Windows and Linux. It uses the Millida code and their login, Discord, and backend.</p>
-    <div class="downloads">
-      <a class="download" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
-      <a class="download" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_amd64.deb">Download for Linux</a>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="#top"><span class="mark">Z</span> Zaru</a>
+      <nav class="nav-links" aria-label="Page">
+        <a href="#features">Features</a>
+        <a href="#play">How you play</a>
+        <a href="#download">Download</a>
+        <a href="#install">Install</a>
+      </nav>
+      <a class="btn btn-lime btn-nav" href="#download">Download</a>
     </div>
-    <p class="meta">Version 99.0.0 · Windows setup about 57 MB · Linux .deb about 62 MB</p>
+  </header>
 
-    <section>
-      <h2>Install</h2>
-      <ol>
-        <li><span class="n">1</span><span>Download the setup file.</span></li>
-        <li><span class="n">2</span><span>If your browser saves it inside a zip, unzip it first.</span></li>
-        <li><span class="n">3</span><span>Windows: run <code>Zaru.Launcher_99.0.0_x64-setup.exe</code>. Linux: install <code>Zaru.Launcher_99.0.0_amd64.deb</code>, then open Zaru Launcher.</span></li>
-        <li><span class="n">4</span><span>If Windows says it protected your PC, choose <strong>More info</strong>, then <strong>Run anyway</strong>.</span></li>
-      </ol>
-      <p class="note">This is a personal unsigned build. Windows shows that warning because the installer is not code-signed. That is expected.</p>
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow"><span class="pulse"></span> Windows and Linux · 99.0.0</p>
+          <h1>Minecraft, ready to play.</h1>
+          <p class="lede">Zaru Launcher fetches Java, the game, and a Fabric starter pack when you press Play. Use a Microsoft account if you own the game, or a nickname if you do not.</p>
+          <div class="cta-row">
+            <a class="btn btn-lime" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
+            <a class="btn btn-ghost" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_amd64.deb">Download for Linux</a>
+          </div>
+          <p class="meta">Windows setup about 57 MB · Linux .deb about 62 MB · No separate Java install</p>
+        </div>
+        <div class="panel" aria-hidden="true">
+          <div class="panel-top"><span class="dots"><i></i><i></i><i></i></span> Zaru Launcher</div>
+          <div class="panel-body">
+            <div class="account">
+              <span class="kicker">Game account</span>
+              <strong>Nickname or Microsoft</strong>
+            </div>
+            <div class="instance">
+              <span class="kicker">Start here</span>
+              <strong>Minecraft 1.21.11 · Fabric</strong>
+            </div>
+            <div class="play"><b>Play</b><span>Java included</span></div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <footer>
-      Zaru Launcher is a personal build based on <a href="https://github.com/millida/launcher">Millida Launcher</a> (GPL-3.0). It is not made, approved, or supported by Millida, and it is not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang.
-    </footer>
+    <div class="strip">
+      <div class="wrap strip-row">
+        <div><b>Two ways in</b><span>Microsoft login, or a nickname</span></div>
+        <div><b>Java included</b><span>Downloaded when you press Play</span></div>
+        <div><b>Fabric starter</b><span>Sodium, Lithium, and more</span></div>
+        <div><b>Mods and skins</b><span>Catalog, wardrobe, friends</span></div>
+      </div>
+    </div>
+
+    <section id="features">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>What you get on the first launch.</h2>
+          <p>Open the app, choose how you will play, and press Play. This is the Millida launcher, renamed and built for friends on Windows and Linux.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="index">01</div>
+            <h3>A game account, then Play.</h3>
+            <p>The first screen asks how you will play. A licensed account uses Microsoft’s own device login. A nickname is enough for offline play. The password is typed on Microsoft’s site, not in Zaru.</p>
+          </article>
+          <article class="card">
+            <div class="index">02</div>
+            <h3>A starter pack that already runs.</h3>
+            <p>The default instance is Minecraft 1.21.11 on Fabric, with Sodium, Lithium, ImmediatelyFast, Entity Culling, More Culling, and Dynamic FPS already in the pack.</p>
+          </article>
+          <article class="card">
+            <div class="index">03</div>
+            <h3>Mods, skins, and friends.</h3>
+            <p>Browse mods and modpacks, change a skin, and invite people from the lobby. Friends, the wardrobe, and Millida’s own servers use their account when you want those.</p>
+          </article>
+          <article class="card">
+            <div class="index">04</div>
+            <h3>No Java hunt.</h3>
+            <p>You do not install Java yourself. Press Play and the launcher brings the runtime, libraries, and game files down before the world opens.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="play">
+      <div class="wrap split">
+        <div class="section-head">
+          <h2>How you play.</h2>
+          <p>Pick one on the first screen. You can add the other later.</p>
+        </div>
+        <ul class="list">
+          <li><span class="tick">→</span><span><strong>Licensed.</strong> Microsoft shows a device code at microsoft.com/link. Zaru never asks for the Microsoft password.</span></li>
+          <li><span class="tick">→</span><span><strong>Offline.</strong> A nickname of 3 to 16 letters, digits, or underscores. That is enough to start a world. Realms and official servers will refuse it.</span></li>
+          <li><span class="tick">→</span><span><strong>Millida, when you want it.</strong> Skins, friends, parties, and Millida SMP still talk to Millida’s servers. Play itself does not wait on that sign-in.</span></li>
+          <li><span class="tick">→</span><span><strong>Your mods.</strong> Add Fabric or other packs from the catalog on top of the starter instance, and keep each build separate.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="download">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Download Zaru.</h2>
+          <p>Version 99.0.0 for 64-bit Windows and Debian-based Linux. macOS is not in this build.</p>
+        </div>
+        <div class="os-grid">
+          <article class="os">
+            <span class="kicker">Windows</span>
+            <h3>Setup installer</h3>
+            <p><code>Zaru.Launcher_99.0.0_x64-setup.exe</code><br>About 57 MB</p>
+            <a class="btn btn-lime" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
+          </article>
+          <article class="os">
+            <span class="kicker">Linux</span>
+            <h3>Debian package</h3>
+            <p><code>Zaru.Launcher_99.0.0_amd64.deb</code><br>About 62 MB · Ubuntu and Debian</p>
+            <a class="btn btn-ghost" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_amd64.deb">Download for Linux</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="install">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Install it, then press Play.</h2>
+        </div>
+        <div class="steps">
+          <article class="step"><b>Step 1</b>Download the file for your system.</article>
+          <article class="step"><b>Step 2</b>If the browser wraps it in a zip, unzip that first.</article>
+          <article class="step"><b>Step 3</b>Windows: run the setup exe. Linux: install the .deb, then open Zaru Launcher.</article>
+          <article class="step"><b>Step 4</b>Choose a nickname or Microsoft, then Play. The first launch downloads the game.</article>
+        </div>
+        <p class="note">This installer is not code-signed. If Windows says it protected your PC, choose More info, then Run anyway. That warning is expected on this personal build.</p>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head"><h2>Questions</h2></div>
+        <details>
+          <summary>Is it free?</summary>
+          <p>Yes. This download has no price and the installer does not add a second app.</p>
+        </details>
+        <details>
+          <summary>Do I need to own Minecraft?</summary>
+          <p>Not to open a local world. A nickname starts the game. Official multiplayer and Realms need a real Microsoft account that owns Minecraft.</p>
+        </details>
+        <details>
+          <summary>Do I install Java first?</summary>
+          <p>No. Play downloads the Java build the game needs.</p>
+        </details>
+        <details>
+          <summary>Is this the official Millida launcher?</summary>
+          <p>No. Zaru is a personal build of the open-source Millida launcher (GPL-3.0). Millida did not make this build and does not support it. It is not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang.</p>
+        </details>
+        <details>
+          <summary>Why is there no macOS download?</summary>
+          <p>This release is Windows and Linux only.</p>
+        </details>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <div class="wrap">
+      Zaru Launcher 99.0.0 is a personal build based on <a href="https://github.com/millida/launcher">Millida Launcher</a>. It is not made, approved, or supported by Millida, and it is not affiliated with Mojang or Microsoft.
+    </div>
+  </footer>
 </body>
 </html>
