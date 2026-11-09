@@ -73,8 +73,13 @@
       --amethyst:     #7546C8;
       --amethyst-dp:  #5C349E;
       --lilac:        #B99AE8;
-      /* Pulled from the logo's own grass block and crown. */
-      --grass:        #7ACB3B;
+      /* The launcher's own purple (zaru-launcher src/styles/02-kit.css). It shares the stage. */
+      --magenta:      #BA28BB;
+      --magenta-hi:   #D32ED3;
+      --orchid:       #E7A3EA;
+      /* Both purples in one stroke; white text holds 4.6:1 at the magenta end, 6:1 at the violet. */
+      --duo:          linear-gradient(135deg, #C42CC6 0%, #8E3BCB 55%, #7A42CC 100%);
+      /* The crown, kept for the one warning on the page. */
       --gold:         #F2B32E;
       --ink:          #F7F0FF;
       --muted:        #B7A9C8;
@@ -112,11 +117,16 @@
     }
     img { max-width: 100%; }
     a { color: inherit; }
-    :focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; border-radius: 4px; }
+    :focus-visible { outline: 2px solid var(--orchid); outline-offset: 3px; border-radius: 4px; }
+    ::selection { background: rgba(211,46,211,.38); color: #fff; }
+    html { scrollbar-color: var(--magenta) var(--bg); }
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--magenta), var(--amethyst)); border-radius: 8px; border: 3px solid var(--bg); }
 
     .skip {
       position: absolute; left: 12px; top: -56px; z-index: var(--z-skip);
-      background: var(--lilac); color: #10091C;
+      background: var(--orchid); color: #10091C;
       padding: 9px 13px; border-radius: 8px; font-weight: 700; text-decoration: none;
     }
     .skip:focus { top: 12px; }
@@ -170,14 +180,14 @@
     .nav-burger i::before, .nav-burger i::after { content: ""; position: absolute; left: 0; }
     .nav-burger i::before { top: -5px; }
     .nav-burger i::after { top: 5px; }
-    .nav-check:focus-visible + .nav-burger { outline: 2px solid var(--lilac); outline-offset: 3px; }
+    .nav-check:focus-visible + .nav-burger { outline: 2px solid var(--orchid); outline-offset: 3px; }
     .nav-links { display: flex; align-items: center; margin-left: auto; gap: 2px; }
     .nav-links a {
       color: var(--muted); text-decoration: none; font-weight: 600; font-size: .97rem;
       padding: 8px 11px; border-radius: var(--r-sm);
       transition: color .18s var(--ease), background .18s var(--ease);
     }
-    .nav-links a:not(.nav-dl):hover { color: var(--ink); background: rgba(255,255,255,.05); }
+    .nav-links a:not(.nav-dl):hover { color: var(--ink); background: rgba(211,46,211,.10); }
     .nav-dl { margin-left: 10px; padding: 9px 15px !important; min-height: 40px; }
 
     /* ---------- buttons ---------- */
@@ -192,12 +202,12 @@
     .btn svg { width: 19px; height: 19px; flex: none; }
     .btn-fill {
       color: #fff;
-      background: linear-gradient(180deg, #8355d6 0%, var(--amethyst-dp) 100%);
-      box-shadow: 0 10px 24px rgba(117,70,200,.32), inset 0 1px 0 rgba(255,255,255,.22);
+      background: var(--duo);
+      box-shadow: 0 10px 26px rgba(186,40,187,.30), 0 4px 14px rgba(117,70,200,.28), inset 0 1px 0 rgba(255,255,255,.24);
     }
-    .btn-fill:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(117,70,200,.42), inset 0 1px 0 rgba(255,255,255,.22); }
+    .btn-fill:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(186,40,187,.42), 0 6px 18px rgba(117,70,200,.32), inset 0 1px 0 rgba(255,255,255,.24); }
     .btn-line { color: var(--ink); background: rgba(255,255,255,.03); border-color: var(--line); }
-    .btn-line:hover { background: var(--surface-2); border-color: rgba(185,154,232,.45); transform: translateY(-2px); }
+    .btn-line:hover { background: var(--surface-2); border-color: rgba(211,46,211,.5); transform: translateY(-2px); }
     .btn:active { transform: translateY(0); }
 
     /* ---------- hero ---------- */
@@ -211,6 +221,13 @@
       mask-image: radial-gradient(860px 560px at 74% 34%, #000 0%, transparent 72%);
       -webkit-mask-image: radial-gradient(860px 560px at 74% 34%, #000 0%, transparent 72%);
     }
+    .hero::after {
+      /* a magenta wash behind the copy, answering the amethyst glow behind the art */
+      content: ""; position: absolute; z-index: var(--z-art); pointer-events: none;
+      left: -12%; top: -24%; width: 62%; height: 86%;
+      background: radial-gradient(closest-side, rgba(186,40,187,.15), transparent);
+    }
+    .h-accent { color: var(--orchid); }
     .hero-grid {
       position: relative; z-index: var(--z-content);
       display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.02fr);
@@ -225,8 +242,10 @@
     .stage { position: relative; width: 100%; aspect-ratio: 100 / 106; }
     .stage-glow {
       position: absolute; inset: 4% 2% 0; border-radius: 50%;
-      background: radial-gradient(closest-side, rgba(117,70,200,.55), rgba(117,70,200,.16) 55%, transparent 100%);
-      filter: blur(8px);
+      background:
+        radial-gradient(closest-side at 70% 32%, rgba(211,46,211,.40), transparent 70%),
+        radial-gradient(closest-side, rgba(117,70,200,.55), rgba(117,70,200,.16) 55%, transparent 100%);
+      filter: blur(10px);
     }
     .stage img { position: absolute; display: block; height: auto; user-select: none; -webkit-user-drag: none; }
     .isl { width: 74%; left: 13%; bottom: 0; animation: bobIsl 11s var(--ease-io) infinite; }
@@ -278,7 +297,7 @@
     }
     .proof li { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .99rem; }
     .proof b { color: var(--ink); font-weight: 600; }
-    .tick { width: 16px; height: 16px; flex: none; color: var(--grass); }
+    .tick { width: 16px; height: 16px; flex: none; color: var(--magenta-hi); }
 
     /* ---------- shared ---------- */
     .frame {
@@ -291,7 +310,7 @@
     }
     .frame::after {
       content: ""; position: absolute; inset: -1px; border-radius: var(--r);
-      background: linear-gradient(145deg, rgba(185,154,232,.42), transparent 42%, transparent 62%, rgba(117,70,200,.28));
+      background: linear-gradient(145deg, rgba(185,154,232,.45), transparent 40%, transparent 60%, rgba(211,46,211,.42));
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor; mask-composite: exclude;
       padding: 1px; pointer-events: none;
@@ -311,7 +330,7 @@
     .way { padding: 20px 0; border-bottom: 1px solid var(--line-soft); }
     .way:first-child { padding-top: 0; }
     .way h3 { display: flex; align-items: baseline; gap: 10px; font-size: 1.35rem; }
-    .way h3 small { font-family: var(--body); font-size: .9rem; font-weight: 600; letter-spacing: 0; color: var(--lilac); }
+    .way h3 small { font-family: var(--body); font-size: .9rem; font-weight: 600; letter-spacing: 0; color: var(--orchid); }
     .way p { color: var(--muted); margin-top: 7px; }
     .aside { margin-top: 20px; color: var(--muted); font-size: .99rem; }
     .aside b { color: var(--ink); }
@@ -337,6 +356,7 @@
     .dl-band {
       background:
         radial-gradient(760px 380px at 18% 0%, rgba(117,70,200,.30), transparent 64%),
+        radial-gradient(640px 340px at 90% 100%, rgba(186,40,187,.22), transparent 66%),
         linear-gradient(180deg, var(--bg-2), var(--bg) 85%);
       border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft);
     }
@@ -347,8 +367,8 @@
       padding: clamp(20px,2.4vw,26px);
       transition: transform .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
     }
-    .os:hover { transform: translateY(-3px); border-color: rgba(185,154,232,.4); box-shadow: var(--shadow); }
-    .os-top { display: flex; align-items: center; gap: 11px; color: var(--lilac); }
+    .os:hover { transform: translateY(-3px); border-color: rgba(211,46,211,.45); box-shadow: var(--shadow), 0 0 0 1px rgba(117,70,200,.18); }
+    .os-top { display: flex; align-items: center; gap: 11px; color: var(--orchid); }
     .os-top svg { width: 22px; height: 22px; }
     .os-top span { font-family: var(--display); font-weight: 700; font-size: 1.05rem; letter-spacing: -.02em; color: var(--ink); }
     .os p { color: var(--muted); }
@@ -364,7 +384,7 @@
     .sums div { background: var(--bg-2); border: 1px solid var(--line-soft); border-radius: var(--r-sm); padding: 12px 14px; }
     .sums dt { color: var(--muted); font-size: .9rem; margin-bottom: 4px; }
     .sums dd { margin: 0; }
-    .sums code { font-size: .8rem; color: var(--lilac); }
+    .sums code { font-size: .8rem; color: var(--orchid); }
     .how { margin-top: 12px; color: var(--muted); font-size: .95rem; }
 
     /* ---------- requirements ---------- */
@@ -379,7 +399,7 @@
     .step p { color: var(--muted); margin-top: 11px; }
     .num {
       width: 29px; height: 29px; display: grid; place-items: center; border-radius: 8px;
-      background: linear-gradient(180deg, #8355d6, var(--amethyst-dp)); color: #fff;
+      background: var(--duo); color: #fff;
       font-family: var(--display); font-weight: 700; font-size: .9rem;
       box-shadow: inset 0 1px 0 rgba(255,255,255,.25);
     }
@@ -393,10 +413,14 @@
 
     /* ---------- upstream ---------- */
     .up { display: grid; grid-template-columns: auto minmax(0,1fr); gap: clamp(22px,4vw,44px); align-items: center;
-          background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(24px,3.4vw,40px); }
+          background:
+            radial-gradient(520px 260px at 0% 0%, rgba(186,40,187,.16), transparent 62%),
+            radial-gradient(560px 280px at 100% 100%, rgba(117,70,200,.20), transparent 62%),
+            var(--surface);
+          border: 1px solid var(--line); border-radius: var(--r); padding: clamp(24px,3.4vw,40px); }
     .up img { width: 108px; height: 108px; display: block; }
     .up p { color: var(--muted); margin-top: 12px; max-width: 62ch; }
-    .up a { color: var(--lilac); }
+    .up a { color: var(--orchid); }
 
     /* ---------- faq ---------- */
     details.q { border-bottom: 1px solid var(--line); }
@@ -408,7 +432,7 @@
     details.q summary::-webkit-details-marker { display: none; }
     details.q summary::after {
       content: ""; width: 8px; height: 8px; flex: none; margin-top: -4px;
-      border-right: 1.6px solid var(--lilac); border-bottom: 1.6px solid var(--lilac);
+      border-right: 1.6px solid var(--orchid); border-bottom: 1.6px solid var(--orchid);
       transform: rotate(45deg); transition: transform .2s var(--ease);
     }
     details.q[open] summary::after { transform: rotate(225deg); margin-top: 4px; }
@@ -421,6 +445,7 @@
     .foot-brand img { width: 28px; height: 28px; }
     .foot p { max-width: 70ch; }
     footer a { color: var(--ink); }
+    footer a:hover, .up a:hover { color: var(--magenta-hi); }
 
     /* ---------- reveals: additive, and each one fits what it reveals ---------- */
     @keyframes openShot { from { opacity: .35; transform: scale(.965); clip-path: inset(5% 4% round 16px); } to { opacity: 1; transform: none; clip-path: inset(0 round 0); } }
@@ -497,7 +522,7 @@
       <div class="wrap">
         <div class="hero-grid">
           <div class="hero-copy">
-            <h1>Minecraft,<br>ready to play.</h1>
+            <h1>Minecraft,<br><span class="h-accent">ready to play.</span></h1>
             <p class="lede">Zaru installs Minecraft, Java and a tuned Fabric pack for you. Sign in with Microsoft or start with a nickname, then press Play.</p>
             <div class="cta-row">
               <a class="btn btn-fill" href="downloads/Zaru.Launcher_99.0.0_x64-setup.exe" download="Zaru.Launcher_99.0.0_x64-setup.exe">
