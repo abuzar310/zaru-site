@@ -9,51 +9,93 @@
   <meta property="og:description" content="Minecraft, ready to play. Microsoft account or a nickname. Windows and Linux.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://zaru-launcher.vercel.app/shots/play.webp">
-  <meta name="theme-color" content="#ba28bb">
+  <meta name="theme-color" content="#10091C">
   <meta name="color-scheme" content="dark">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ba28bb'/%3E%3Cpath d='M8 8h11v4h-6v3h6v4h-6v5H8V8z' fill='%23ffffff'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%237546C8'/%3E%3Cpath d='M8 8h11v4h-6v3h6v4h-6v5H8V8z' fill='%23F7F0FF'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@560;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --paper: #ba28bb;
-      --ink: #ffffff;
-      --muted: #f6eeff;
-      --line: rgba(255, 255, 255, 0.28);
-      --glass: rgba(255, 255, 255, 0.14);
-      --glass-solid: #c42cc8;
-      --lilac: #f3e8ff;
-      --nav: 72px;
+      --bg-primary: #10091C;
+      --bg-secondary: #170E24;
+      --surface: #24113D;
+      --surface-elevated: #2D1945;
+      --accent: #7546C8;
+      --accent-deep: #5c349e;
+      --accent-light: #B99AE8;
+      --text-primary: #F7F0FF;
+      --text-secondary: #B7A9C8;
+      --border: rgba(255, 255, 255, 0.10);
+      --nav: 68px;
+      --radius: 12px;
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      --font-display: "Familjen Grotesk", "Segoe UI", sans-serif;
+      --font-body: "Source Sans 3", "Segoe UI", sans-serif;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; color-scheme: dark; }
     body {
       margin: 0;
-      color: var(--ink);
-      background:
-        radial-gradient(80% 90% at 82% 42%, rgba(255, 80, 245, 0.42), transparent 58%),
-        linear-gradient(115deg, #0e0814 0%, #241028 28%, #9a1c9e 62%, #d32ed3 100%);
-      background-attachment: fixed;
-      font-family: -apple-system, BlinkMacSystemFont, "Source Sans 3", "Segoe UI", sans-serif;
-      font-size: 1.125rem;
-      line-height: 1.5;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      line-height: 1.6;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
     }
+    img { max-width: 100%; }
     a { color: inherit; }
     .skip {
       position: absolute;
       left: 12px;
-      top: -40px;
-      background: linear-gradient(180deg, #efe8ff, #b79cff 42%, #6d3cc4);
-      color: #1a0d2e;
+      top: -48px;
+      z-index: 40;
+      background: var(--accent-light);
+      color: #10091C;
       padding: 8px 12px;
       border-radius: 8px;
-      z-index: 30;
+      font-weight: 700;
     }
     .skip:focus { top: 12px; }
-    .wrap { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .wrap { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin: 0;
+      text-wrap: balance;
+      font-weight: 700;
+    }
+    h1 { font-size: clamp(2.4rem, 5vw, 4.4rem); }
+    h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
+    h3 { font-size: 1.25rem; line-height: 1.25; }
+    p { margin: 0; }
+    section { padding: 88px 0; scroll-margin-top: calc(var(--nav) + 12px); }
+    section:focus { outline: none; }
+    .kicker {
+      margin: 0 0 12px;
+      color: var(--accent-light);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .section-head { max-width: 40rem; margin-bottom: 28px; }
+    .section-head p { margin-top: 12px; color: var(--text-secondary); }
+
     .nav {
       position: sticky;
       top: 0;
@@ -61,211 +103,358 @@
       height: var(--nav);
       display: flex;
       align-items: center;
-      background: rgba(14, 8, 20, 0.62);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(18px);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      background: rgba(23, 14, 36, 0.92);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
     }
-    .nav .wrap { display: flex; align-items: center; gap: 28px; width: min(1080px, calc(100% - 40px)); }
+    .nav-bar { display: flex; align-items: center; gap: 20px; width: min(1120px, calc(100% - 48px)); }
     .brand {
       display: flex;
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      font-family: -apple-system, BlinkMacSystemFont, "Familjen Grotesk", sans-serif;
+      font-family: var(--font-display);
       font-weight: 700;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       letter-spacing: -0.03em;
     }
     .mark {
       width: 32px;
       height: 32px;
       border-radius: 8px;
-      background: linear-gradient(180deg, #ffffff, #f7c6f8 42%, #ba28bb);
-      color: #1a0d2e;
-      box-shadow: inset 0 1px 0 #fff, 0 8px 18px rgba(40, 10, 70, 0.35);
       display: grid;
       place-items: center;
-      font-weight: 700;
+      background: linear-gradient(180deg, #8d62d6, var(--accent-deep));
+      color: var(--text-primary);
+      font-size: 1rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
     }
-    .nav-links { display: flex; margin-left: auto; }
+    .nav-check {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+    }
+    .nav-burger {
+      display: none;
+      margin-left: auto;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      place-items: center;
+      cursor: pointer;
+    }
+    .nav-burger > span:first-child,
+    .nav-burger > span:first-child::before,
+    .nav-burger > span:first-child::after {
+      display: block;
+      width: 16px;
+      height: 1.5px;
+      background: var(--text-primary);
+      position: relative;
+    }
+    .nav-burger > span:first-child::before,
+    .nav-burger > span:first-child::after {
+      content: "";
+      position: absolute;
+      left: 0;
+    }
+    .nav-burger > span:first-child::before { top: -5px; }
+    .nav-burger > span:first-child::after { top: 5px; }
+    .nav-check:focus-visible + .nav-burger { outline: 2px solid var(--accent-light); outline-offset: 3px; }
+    .nav-links { display: flex; align-items: center; margin-left: auto; gap: 4px; }
     .nav-links a {
-      color: var(--muted);
+      color: var(--text-secondary);
       text-decoration: none;
       font-weight: 600;
-      font-size: 1rem;
-      margin-left: 22px;
+      font-size: 0.98rem;
+      padding: 8px 10px;
+      border-radius: 8px;
     }
-    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:not(.nav-dl):hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.04); }
+    .nav-links a:active { color: var(--text-primary); }
+    .nav-dl {
+      margin-left: 8px;
+      padding: 8px 14px !important;
+      min-height: 40px;
+    }
+
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       min-height: 48px;
       padding: 0 18px;
-      border-radius: 999px;
+      border-radius: 8px;
       text-decoration: none;
       font-weight: 700;
       border: 1px solid transparent;
-      white-space: nowrap;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
     }
-    .btn:focus-visible, .nav-links a:focus-visible, summary:focus-visible, .brand:focus-visible {
-      outline: 3px solid #efe8ff;
+    .btn svg { width: 18px; height: 18px; flex: none; }
+    .btn-fill {
+      color: var(--text-primary);
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-deep) 100%);
+      box-shadow: 0 8px 20px rgba(117, 70, 200, 0.28);
+    }
+    .btn-fill:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(117, 70, 200, 0.36); }
+    .btn-line {
+      color: var(--text-primary);
+      background: transparent;
+      border-color: var(--border);
+    }
+    .btn-line:hover { background: var(--surface); border-color: rgba(185, 154, 232, 0.45); transform: translateY(-1px); }
+    :focus-visible {
+      outline: 2px solid var(--accent-light);
       outline-offset: 3px;
     }
-    .btn-fill, .btn-line {
-      color: #3a103c;
-      border-color: transparent;
-      background: #ffffff;
-      box-shadow: 0 10px 22px rgba(20, 0, 30, 0.28);
+
+    .hero {
+      position: relative;
+      padding: 72px 0 32px;
+      overflow: hidden;
     }
-    .btn-line {
-      color: var(--ink);
-      background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.08));
+    .hero::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      width: min(720px, 80vw);
+      height: min(720px, 80vw);
+      right: -8%;
+      top: -28%;
+      background: radial-gradient(circle, rgba(117, 70, 200, 0.38), transparent 68%);
+      pointer-events: none;
     }
-    .btn-fill:hover, .btn-line:hover { filter: brightness(1.06); }
-    h1, h2, h3 {
-      font-family: -apple-system, BlinkMacSystemFont, "Familjen Grotesk", sans-serif;
-      letter-spacing: -0.03em;
-      margin: 0;
-      text-wrap: balance;
-    }
-    h1 { font-size: clamp(2.75rem, 6vw, 4.75rem); line-height: 0.95; font-weight: 700; }
-    h2 { font-size: clamp(2rem, 3vw, 2.75rem); line-height: 1.05; }
-    h3 { font-size: 1.45rem; line-height: 1.2; }
-    .hero { padding: 64px 0 28px; }
     .hero-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
-      gap: 40px;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.15fr);
+      gap: 48px;
       align-items: center;
     }
-    .lede { margin: 16px 0 0; max-width: 38rem; color: var(--muted); font-size: 1.2rem; text-wrap: pretty; }
+    .lede { margin-top: 16px; max-width: 36rem; color: var(--text-secondary); font-size: 1.2rem; text-wrap: pretty; }
     .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-    .meta { margin: 14px 0 0; color: var(--muted); font-size: 0.95rem; }
-    .play-card {
-      color: var(--ink);
-      border-radius: 28px;
-      min-height: 280px;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.42), rgba(255,255,255,0.08) 32%, rgba(186, 40, 187, 0.2)),
-        #c42cc8;
-      border: 1px solid rgba(255, 255, 255, 0.32);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 24px 50px rgba(10, 0, 24, 0.45);
-      backdrop-filter: blur(16px);
+    .meta { margin-top: 14px; color: var(--text-secondary); font-size: 0.95rem; }
+    .meta.more { margin-top: 16px; }
+    .meta a { color: var(--accent-light); }
+    .frame {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px;
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.06);
     }
-    .play-card p { margin: 0; opacity: 0.85; font-weight: 600; }
-    .play-card strong {
+    .frame img {
       display: block;
-      margin-top: 8px;
-      font-family: "Familjen Grotesk", sans-serif;
-      font-size: clamp(3rem, 5vw, 4.5rem);
-      letter-spacing: -0.04em;
-      line-height: 0.9;
-    }
-    .facts {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1px;
-      background: var(--line);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      overflow: hidden;
-      margin: 28px auto 8px;
-    }
-    .facts div { padding: 16px 18px; }
-    .facts b { display: block; font-size: 1rem; }
-    .facts span { color: var(--muted); font-size: 0.92rem; }
-    .shot { margin: 0; }
-    .shot img {
       width: 100%;
       height: auto;
-      display: block;
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.32);
-      background: #140814;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 28px 60px rgba(8, 0, 20, 0.5);
+      border-radius: 8px;
+      background: #0c0714;
     }
-    .shot figcaption { margin-top: 12px; color: var(--muted); font-size: 1.05rem; }
-    .shot figcaption b { color: var(--ink); }
-    .shot-lead { margin-bottom: 22px; }
-    .shot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .shot-grid + .shot { margin-top: 22px; }
-    section { padding: 64px 0; scroll-margin-top: calc(var(--nav) + 12px); }
-    .section-head { max-width: 40rem; margin-bottom: 22px; }
-    .section-head p { margin: 10px 0 0; color: var(--muted); text-wrap: pretty; }
-    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .card { border-radius: 20px; padding: 22px; }
-    .card, .facts div, .list li, .os, .step, .note {
-      color: var(--ink);
+    .shot { margin: 0; }
+    .shot figcaption { margin-top: 10px; color: var(--text-secondary); font-size: 1rem; }
+    .shot figcaption b { color: var(--text-primary); font-weight: 700; }
+    .shot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 22px; }
+    .shot-wide { margin-top: 22px; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .feat { grid-column: span 2; }
+    .feat-lead, .features .feat:nth-child(2) { grid-column: span 3; }
+    .feat {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 42%), var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      transition: transform 160ms ease, border-color 160ms ease;
+    }
+    .feat:hover { transform: translateY(-2px); border-color: rgba(185, 154, 232, 0.35); }
+    .feat-lead {
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.08) 42%, rgba(186, 40, 187, 0.12)),
-        var(--glass);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 16px 36px rgba(8, 0, 20, 0.28);
-      backdrop-filter: blur(16px);
+        radial-gradient(420px 220px at 100% 0%, rgba(117, 70, 200, 0.35), transparent 60%),
+        var(--surface-elevated);
     }
-    .card p, .facts span, .os p, .step p, .note { color: var(--muted); }
-    .list { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
-    .list li { border-radius: 16px; padding: 16px 18px; }
-    .os-grid, .steps { display: grid; gap: 14px; }
-    .os-grid { grid-template-columns: 1fr 1fr; }
-    .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .os, .step { border-radius: 20px; padding: 22px; }
-    .os { display: flex; flex-direction: column; gap: 8px; min-height: 230px; }
-    .os p, .step p { margin: 0; color: var(--muted); }
+    .feat-wide { grid-column: span 6; }
+    .icon {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: rgba(117, 70, 200, 0.18);
+      color: var(--accent-light);
+      margin-bottom: 14px;
+    }
+    .icon svg { width: 20px; height: 20px; }
+    .feat p { margin-top: 8px; color: var(--text-secondary); }
+
+    .play-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .play-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: start;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 18px;
+    }
+    .num {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--accent);
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .play-list p { color: var(--text-secondary); }
+    .play-list strong { color: var(--text-primary); }
+
+    .os-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .os {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 240px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 160ms ease, border-color 160ms ease;
+    }
+    .os:hover { transform: translateY(-2px); border-color: rgba(185, 154, 232, 0.35); }
+    .os .icon { margin-bottom: 4px; }
+    .os p { color: var(--text-secondary); }
     .os .btn { margin-top: auto; align-self: flex-start; }
-    .kicker { color: #ffffff; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    code {
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 0.88em;
+      color: var(--text-primary);
+    }
+
+    .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .step {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .step p { color: var(--text-secondary); margin-top: 10px; }
     .note {
       margin-top: 16px;
       padding: 16px 18px;
-      border-radius: 16px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(185, 154, 232, 0.35);
+      background: var(--surface);
+      color: var(--text-secondary);
     }
-    details { border-bottom: 1px solid var(--line); padding: 14px 0; }
-    summary { cursor: pointer; font-weight: 700; font-size: 1.15rem; }
-    details p { margin: 8px 0 0; color: var(--muted); max-width: 68ch; }
+    .note strong { color: var(--text-primary); }
+
+    details {
+      border-bottom: 1px solid var(--border);
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.08rem;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-right: 1.5px solid var(--accent-light);
+      border-bottom: 1.5px solid var(--accent-light);
+      transform: rotate(45deg);
+      flex: none;
+      margin-top: -4px;
+    }
+    details[open] summary::after { transform: rotate(225deg); margin-top: 4px; }
+    details p { margin: 0 0 16px; color: var(--text-secondary); max-width: 68ch; }
+
     footer {
-      padding: 8px 0 40px;
-      color: var(--muted);
-      font-size: 0.95rem;
-      border-top: 1px solid var(--line);
+      padding: 28px 0 40px;
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      border-top: 1px solid var(--border);
     }
-    footer .wrap { padding-top: 22px; }
-    footer a { color: var(--ink); }
-    code { font-family: ui-monospace, Consolas, monospace; font-size: 0.92em; }
-    @media (max-width: 860px) {
-      .nav-links { display: none; }
-      .hero-grid, .facts, .cards, .os-grid, .steps, .shot-grid { grid-template-columns: 1fr; }
-      .hero { padding-top: 36px; }
-      .wrap, .nav .wrap { width: min(1080px, calc(100% - 28px)); }
+    footer a { color: var(--text-primary); }
+
+    @media (max-width: 900px) {
+      .wrap, .nav-bar { width: min(1120px, calc(100% - 32px)); }
+      .nav-burger { display: grid; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: var(--nav);
+        left: 0;
+        right: 0;
+        margin: 0;
+        padding: 8px 16px 16px;
+        flex-direction: column;
+        align-items: stretch;
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border);
+        gap: 2px;
+      }
+      .nav-check:checked ~ .nav-links { display: flex; }
+      .nav-links a { padding: 12px 10px; }
+      .nav-dl { margin: 8px 0 0; text-align: center; }
+      .hero { padding-top: 40px; }
+      .hero-grid, .shot-grid, .os-grid, .steps { grid-template-columns: 1fr; }
+      .features { grid-template-columns: 1fr; }
+      .feat, .feat-lead, .features .feat:nth-child(2), .feat-wide { grid-column: auto; }
+      section { padding: 64px 0; }
+      h1 { font-size: clamp(2.15rem, 9vw, 3rem); }
+    }
+    @media (max-width: 560px) {
+      .cta-row { flex-direction: column; }
+      .cta-row .btn { width: 100%; }
+      .os .btn { width: 100%; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
+      .btn, .feat, .os { transition: none; }
+      .btn-fill:hover, .btn-line:hover, .feat:hover, .os:hover { transform: none; }
     }
     @media (prefers-reduced-transparency: reduce) {
-      .nav, .play-card, .card, .facts div, .list li, .os, .step, .note {
-        backdrop-filter: none;
-        background: var(--glass-solid);
-      }
+      .nav { backdrop-filter: none; background: var(--bg-secondary); }
     }
   </style>
 </head>
 <body>
   <a class="skip" href="#top">Skip to content</a>
   <header class="nav">
-    <div class="wrap">
+    <div class="wrap nav-bar">
       <a class="brand" href="#top" translate="no"><span class="mark" aria-hidden="true">Z</span> Zaru</a>
+      <input class="nav-check" id="nav-open" type="checkbox">
+      <label class="nav-burger" for="nav-open"><span></span><span class="sr-only">Menu</span></label>
       <nav class="nav-links" aria-label="Page">
-        <a href="#snapshots">Snapshots</a>
         <a href="#features">Features</a>
-        <a href="#play">How you play</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#play">How to Play</a>
         <a href="#download">Download</a>
-        <a href="#install">Install</a>
         <a href="https://discord.gg/Tfd7y4FjP" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a class="btn btn-fill nav-dl" href="#download">Download</a>
       </nav>
     </div>
   </header>
@@ -274,52 +463,61 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
+          <p class="kicker">Minecraft launcher</p>
           <h1>Minecraft, ready to play.</h1>
-          <p class="lede">Zaru Launcher fetches Java, the game, and a Fabric starter pack when you press Play. Use a Microsoft account if you own the game, or a nickname if you do not.</p>
+          <p class="lede">Your game. Your mods. Your world. Everything ready when you are.</p>
           <div class="cta-row">
-            <a class="btn btn-fill" href="downloads/Zaru.Launcher_99.0.0_x64-setup.exe" download="Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
-            <a class="btn btn-line" href="downloads/Zaru.Launcher_99.0.0_amd64.deb" download="Zaru.Launcher_99.0.0_amd64.deb">Download for Linux</a>
+            <a class="btn btn-fill" href="downloads/Zaru.Launcher_99.0.0_x64-setup.exe" download="Zaru.Launcher_99.0.0_x64-setup.exe">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 9h18M8 20h8"/></svg>
+              Download for Windows
+            </a>
+            <a class="btn btn-line" href="downloads/Zaru.Launcher_99.0.0_amd64.deb" download="Zaru.Launcher_99.0.0_amd64.deb">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M7 9h6M7 13h10"/></svg>
+              Download for Linux
+            </a>
           </div>
           <p class="meta">Version 99.0.0 · Windows setup about 57&nbsp;MB · Linux .deb about 62&nbsp;MB</p>
         </div>
-        <div class="play-card">
-          <p>Start here · Minecraft 1.21.11 · Fabric</p>
-          <strong>Play</strong>
-          <p>Java comes with it</p>
-        </div>
-      </div>
-      <div class="wrap">
-        <div class="facts">
-          <div><b>Two ways in</b><span>Microsoft login, or a nickname</span></div>
-          <div><b>Java included</b><span>Downloaded when you press Play</span></div>
-          <div><b>Fabric starter</b><span>Sodium, Lithium, and more</span></div>
-          <div><b>Mods and skins</b><span>Catalog, wardrobe, friends</span></div>
-        </div>
+        <figure class="shot">
+          <div class="frame">
+            <img src="shots/play.webp" width="1200" height="760" alt="Zaru Launcher lobby with a character, Minecraft 1.21.11 on Fabric, and a Play button">
+          </div>
+        </figure>
       </div>
     </section>
 
-    <section id="snapshots">
+    <section id="screenshots">
+      <span id="snapshots" hidden></span>
       <div class="wrap">
         <div class="section-head">
+          <p class="kicker">Screenshots</p>
           <h2>The launcher, open.</h2>
           <p>These are the Linux build, version 99.0.0, on a fresh start. The window is 1200 by 760.</p>
         </div>
-        <figure class="shot shot-lead">
-          <img src="shots/play.webp" width="1200" height="760" alt="Zaru Launcher lobby with a character, Minecraft 1.21.11 on Fabric, and a Play button">
+        <figure class="shot">
+          <div class="frame">
+            <img src="shots/play.webp" width="1200" height="760" alt="Zaru Launcher lobby with a character, Minecraft 1.21.11 on Fabric, and a Play button" loading="lazy">
+          </div>
           <figcaption><b>Lobby.</b> The character, the Fabric starter, and Play.</figcaption>
         </figure>
         <div class="shot-grid">
           <figure class="shot">
-            <img src="shots/account.webp" width="1200" height="760" alt="First screen titled Game account, with Licensed as the main button and Offline underneath" loading="lazy">
+            <div class="frame">
+              <img src="shots/account.webp" width="1200" height="760" alt="First screen titled Game account, with Licensed as the main button and Offline underneath" loading="lazy">
+            </div>
             <figcaption><b>First screen.</b> Licensed comes first. A nickname is the other way in.</figcaption>
           </figure>
           <figure class="shot">
-            <img src="shots/skin.webp" width="1200" height="760" alt="Skin wardrobe with a character preview, Looks selected, and an Upload skin button" loading="lazy">
+            <div class="frame">
+              <img src="shots/skin.webp" width="1200" height="760" alt="Skin wardrobe with a character preview, Looks selected, and an Upload skin button" loading="lazy">
+            </div>
             <figcaption><b>Wardrobe.</b> Looks, skins, and an upload.</figcaption>
           </figure>
         </div>
-        <figure class="shot">
-          <img src="shots/library.webp" width="1200" height="760" alt="Library of Minecraft versions and modpacks, including Minecraft 1.21.11 Fabric and several modpacks" loading="lazy">
+        <figure class="shot shot-wide">
+          <div class="frame">
+            <img src="shots/library.webp" width="1200" height="760" alt="Library of Minecraft versions and modpacks, including Minecraft 1.21.11 Fabric and several modpacks" loading="lazy">
+          </div>
           <figcaption><b>Library.</b> Minecraft versions and modpacks, including the 1.21.11 Fabric starter.</figcaption>
         </figure>
       </div>
@@ -328,25 +526,40 @@
     <section id="features">
       <div class="wrap">
         <div class="section-head">
+          <p class="kicker">Features</p>
           <h2>What you get on the first launch.</h2>
           <p>Open the app, choose how you will play, and press Play. This is the Millida launcher, renamed and built for friends on Windows and Linux.</p>
         </div>
-        <div class="cards">
-          <article class="card">
-            <h3>A game account, then Play.</h3>
-            <p>The first screen asks how you will play. A licensed account uses Microsoft’s own device login. A nickname is enough for offline play. The password is typed on Microsoft’s site, not in Zaru.</p>
+        <div class="features">
+          <article class="feat feat-lead">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3"/><path d="M5 19c1.4-3 3.8-4.5 7-4.5S17.6 16 19 19"/></svg></div>
+            <h3>Microsoft account</h3>
+            <p>A licensed account uses Microsoft’s own device login. The password is typed on Microsoft’s site, not in Zaru.</p>
           </article>
-          <article class="card">
-            <h3>A starter pack that already runs.</h3>
+          <article class="feat">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+            <h3>Offline nickname</h3>
+            <p>A nickname of 3 to 16 letters, digits, or underscores starts a local world. Realms and official servers will refuse it.</p>
+          </article>
+          <article class="feat">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 8h8v3a4 4 0 0 1-8 0V8z"/><path d="M8 9H6a3 3 0 0 0 0 6h2M16 9h2a3 3 0 0 1 0 6h-2"/><path d="M12 15v3"/></svg></div>
+            <h3>Java included</h3>
+            <p>You do not install Java yourself. Press Play and the launcher brings the runtime, libraries, and game files down before the world opens.</p>
+          </article>
+          <article class="feat feat-wide">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 8l8-4 8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4M4 16l8 4 8-4"/></svg></div>
+            <h3>Fabric starter</h3>
             <p>The default instance is Minecraft 1.21.11 on Fabric, with Sodium, Lithium, ImmediatelyFast, Entity Culling, More Culling, and Dynamic FPS already in the pack.</p>
           </article>
-          <article class="card">
-            <h3>Mods, skins, and friends.</h3>
-            <p>Browse mods and modpacks, change a skin, and invite people from the lobby. Friends, the wardrobe, and Millida’s own servers use their account when you want those.</p>
+          <article class="feat">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 4h5l5 5v11H8z"/><path d="M13 4v5h5"/></svg></div>
+            <h3>Mods and modpacks</h3>
+            <p>Add Fabric or other packs from the catalog on top of the starter instance, and keep each build separate.</p>
           </article>
-          <article class="card">
-            <h3>No Java hunt.</h3>
-            <p>You do not install Java yourself. Press Play and the launcher brings the runtime, libraries, and game files down before the world opens.</p>
+          <article class="feat">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="8" cy="9" r="2.2"/><circle cx="16" cy="9" r="2.2"/><path d="M4 18c.6-2.2 2.2-3.4 4-3.4s3.4 1.2 4 3.4M12 18c.6-2.2 2.2-3.4 4-3.4s3.4 1.2 4 3.4"/></svg></div>
+            <h3>Skins and friends</h3>
+            <p>Change a skin and invite people from the lobby. Friends, the wardrobe, and Millida’s own servers use their account when you want those.</p>
           </article>
         </div>
       </div>
@@ -355,59 +568,68 @@
     <section id="play">
       <div class="wrap">
         <div class="section-head">
+          <p class="kicker">How to play</p>
           <h2>How you play.</h2>
           <p>Pick one on the first screen. You can add the other later.</p>
         </div>
-        <ul class="list">
-          <li><strong>Licensed.</strong> Microsoft shows a device code at microsoft.com/link. Zaru never asks for the Microsoft password.</li>
-          <li><strong>Offline.</strong> A nickname of 3 to 16 letters, digits, or underscores. That is enough to start a world. Realms and official servers will refuse it.</li>
-          <li><strong>Millida, when you want it.</strong> Skins, friends, parties, and Millida SMP still talk to Millida’s servers. Play itself does not wait on that sign-in.</li>
-          <li><strong>Your mods.</strong> Add Fabric or other packs from the catalog on top of the starter instance, and keep each build separate.</li>
-        </ul>
+        <ol class="play-list">
+          <li><span class="num">1</span><p><strong>Licensed.</strong> Microsoft shows a device code at microsoft.com/link. Zaru never asks for the Microsoft password.</p></li>
+          <li><span class="num">2</span><p><strong>Offline.</strong> A nickname of 3 to 16 letters, digits, or underscores. That is enough to start a world. Realms and official servers will refuse it.</p></li>
+          <li><span class="num">3</span><p><strong>Millida, when you want it.</strong> Skins, friends, parties, and Millida SMP still talk to Millida’s servers. Play itself does not wait on that sign-in.</p></li>
+          <li><span class="num">4</span><p><strong>Your mods.</strong> Add Fabric or other packs from the catalog on top of the starter instance, and keep each build separate.</p></li>
+        </ol>
       </div>
     </section>
 
     <section id="download">
       <div class="wrap">
         <div class="section-head">
+          <p class="kicker">Download</p>
           <h2>Download Zaru.</h2>
           <p>Version 99.0.0 for 64-bit Windows and Debian-based Linux. macOS is not in this build.</p>
         </div>
         <div class="os-grid">
           <article class="os">
-            <span class="kicker">Windows</span>
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 9h18M8 20h8"/></svg></div>
+            <p class="kicker">Windows</p>
             <h3>Setup installer</h3>
             <p><code translate="no">Zaru.Launcher_99.0.0_x64-setup.exe</code><br>About 57&nbsp;MB</p>
             <a class="btn btn-fill" href="downloads/Zaru.Launcher_99.0.0_x64-setup.exe" download="Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
           </article>
           <article class="os">
-            <span class="kicker">Linux</span>
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M7 9h6M7 13h10"/></svg></div>
+            <p class="kicker">Linux</p>
             <h3>Debian package</h3>
             <p><code translate="no">Zaru.Launcher_99.0.0_amd64.deb</code><br>About 62&nbsp;MB · Ubuntu and Debian</p>
             <a class="btn btn-line" href="downloads/Zaru.Launcher_99.0.0_amd64.deb" download="Zaru.Launcher_99.0.0_amd64.deb">Download for Linux</a>
           </article>
         </div>
+        <p class="meta more"><a href="#install">Install steps</a></p>
       </div>
     </section>
 
     <section id="install">
       <div class="wrap">
         <div class="section-head">
+          <p class="kicker">Install</p>
           <h2>Install it, then press Play.</h2>
         </div>
         <div class="steps">
-          <article class="step"><p class="kicker">Step 1</p><p>Download the file for your system.</p></article>
-          <article class="step"><p class="kicker">Step 2</p><p>If the browser wraps it in a zip, unzip that first.</p></article>
-          <article class="step"><p class="kicker">Step 3</p><p>Windows: run the setup exe. Linux: install the .deb, then open Zaru Launcher.</p></article>
-          <article class="step"><p class="kicker">Step 4</p><p>Choose a nickname or Microsoft, then Play. The first launch downloads the game.</p></article>
+          <article class="step"><span class="num">1</span><p>Download the file for your system.</p></article>
+          <article class="step"><span class="num">2</span><p>If the browser wraps it in a zip, unzip that first.</p></article>
+          <article class="step"><span class="num">3</span><p>Windows: run the setup exe. Linux: install the .deb, then open Zaru Launcher.</p></article>
+          <article class="step"><span class="num">4</span><p>Choose a nickname or Microsoft, then Play. The first launch downloads the game.</p></article>
         </div>
-        <p class="note">This installer is not code-signed. If Windows says it protected your PC, choose More info, then Run anyway. That warning is expected on this personal build.</p>
+        <p class="note"><strong>This installer is not code-signed.</strong> If Windows says it protected your PC, choose More info, then Run anyway. That warning is expected on this personal build.</p>
       </div>
     </section>
 
     <section id="faq">
       <div class="wrap">
-        <div class="section-head"><h2>Questions</h2></div>
+        <div class="section-head">
+          <p class="kicker">FAQ</p>
+          <h2>Questions</h2>
+        </div>
         <details>
           <summary>Is it free?</summary>
           <p>Yes. This download has no price and the installer does not add a second app.</p>
@@ -437,5 +659,13 @@
       Zaru Launcher 99.0.0 is a personal build based on <a href="https://github.com/millida/launcher">Millida Launcher</a>. It is not made, approved, or supported by Millida, and it is not affiliated with Mojang or Microsoft. Talk on <a href="https://discord.gg/Tfd7y4FjP" target="_blank" rel="noopener noreferrer">Discord</a>.
     </div>
   </footer>
+  <script>
+    document.querySelectorAll(".nav-links a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        var box = document.getElementById("nav-open");
+        if (box) box.checked = false;
+      });
+    });
+  </script>
 </body>
 </html>
