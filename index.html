@@ -4,455 +4,487 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Zaru Launcher — Minecraft for Windows and Linux</title>
-  <meta name="description" content="Zaru Launcher installs Minecraft, Java, and a Fabric starter pack. Play with a Microsoft account or a nickname. Windows and Linux.">
-  <meta property="og:title" content="Zaru Launcher">
-  <meta property="og:description" content="Minecraft, ready to play. Microsoft account or a nickname. Windows and Linux.">
+  <meta name="description" content="Zaru Launcher installs Minecraft, Java and a Fabric starter pack with six performance mods. Play with a Microsoft account or just a nickname. Free, for Windows and Linux.">
+  <link rel="canonical" href="https://zaru-launcher.vercel.app/">
+
+  <meta property="og:title" content="Zaru Launcher — Minecraft, ready to play.">
+  <meta property="og:description" content="Installs Minecraft, Java and a Fabric starter pack with six performance mods. Microsoft account or a nickname. Windows and Linux.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://zaru-launcher.vercel.app/shots/play.webp">
+  <meta property="og:url" content="https://zaru-launcher.vercel.app/">
+  <meta property="og:image" content="https://zaru-launcher.vercel.app/brand/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The Zaru Launcher crowned block logo beside the words Zaru Launcher, Minecraft ready to play.">
+  <meta property="og:site_name" content="Zaru Launcher">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zaru Launcher — Minecraft, ready to play.">
+  <meta name="twitter:description" content="Installs Minecraft, Java and a Fabric starter pack with six performance mods. Windows and Linux.">
+  <meta name="twitter:image" content="https://zaru-launcher.vercel.app/brand/og.jpg">
+
   <meta name="theme-color" content="#10091C">
   <meta name="color-scheme" content="dark">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%237546C8'/%3E%3Cpath d='M8 8h11v4h-6v3h6v4h-6v5H8V8z' fill='%23F7F0FF'/%3E%3C/svg%3E">
+  <link rel="icon" href="brand/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="brand/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@560;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="brand/island.webp" fetchpriority="high">
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    // Motion is an enhancement. The intro only runs in a tab someone is looking
+    // at, so a background tab, a crawler or a headless render gets the finished
+    // page instead of one frozen at opacity 0.
+    (function (d) {
+      d.classList.add("js");
+      var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (document.visibilityState === "visible" && !calm) d.classList.add("intro");
+    })(document.documentElement);
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Zaru Launcher",
+    "applicationCategory": "GameApplication",
+    "applicationSubCategory": "Minecraft launcher",
+    "operatingSystem": "Windows 10, Windows 11, Debian, Ubuntu",
+    "softwareVersion": "99.0.0",
+    "url": "https://zaru-launcher.vercel.app/",
+    "image": "https://zaru-launcher.vercel.app/brand/og.jpg",
+    "description": "A personal Minecraft launcher that installs Minecraft, Java and a Fabric starter pack with six performance mods. Sign in with a Microsoft account or start with a nickname.",
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+    "isBasedOn": "https://github.com/millida/launcher",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+
   <style>
     :root {
-      --bg-primary: #10091C;
-      --bg-secondary: #170E24;
-      --surface: #24113D;
-      --surface-elevated: #2D1945;
-      --accent: #7546C8;
-      --accent-deep: #5c349e;
-      --accent-light: #B99AE8;
-      --text-primary: #F7F0FF;
-      --text-secondary: #B7A9C8;
-      --border: rgba(255, 255, 255, 0.10);
+      /* Royal amethyst carries the surface. */
+      --bg:           #10091C;
+      --bg-2:         #170E24;
+      --surface:      #1C1030;
+      --surface-2:    #24113D;
+      --raised:       #2D1945;
+      --amethyst:     #7546C8;
+      --amethyst-dp:  #5C349E;
+      --lilac:        #B99AE8;
+      /* Pulled from the logo's own grass block and crown. */
+      --grass:        #7ACB3B;
+      --gold:         #F2B32E;
+      --ink:          #F7F0FF;
+      --muted:        #B7A9C8;
+      --line:         rgba(255,255,255,.10);
+      --line-soft:    rgba(255,255,255,.06);
+
       --nav: 68px;
-      --radius: 12px;
-      --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-      --font-display: "Familjen Grotesk", "Segoe UI", sans-serif;
-      --font-body: "Source Sans 3", "Segoe UI", sans-serif;
+      --r: 14px;
+      --r-sm: 9px;
+      --shadow: 0 18px 44px rgba(0,0,0,.42);
+      --ease: cubic-bezier(.16,1,.3,1);
+      --ease-io: cubic-bezier(.45,0,.55,1);
+
+      --z-art: 0;
+      --z-content: 1;
+      --z-sticky: 20;
+      --z-skip: 40;
+
+      --display: "Familjen Grotesk", "Segoe UI", sans-serif;
+      --body: "Source Sans 3", "Segoe UI", sans-serif;
     }
+
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; color-scheme: dark; }
+    html { scroll-behavior: smooth; color-scheme: dark; -webkit-text-size-adjust: 100%; }
     body {
       margin: 0;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--body);
       font-size: 1.0625rem;
-      line-height: 1.6;
+      line-height: 1.65;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
     }
     img { max-width: 100%; }
     a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; border-radius: 4px; }
+
     .skip {
-      position: absolute;
-      left: 12px;
-      top: -48px;
-      z-index: 40;
-      background: var(--accent-light);
-      color: #10091C;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-weight: 700;
+      position: absolute; left: 12px; top: -56px; z-index: var(--z-skip);
+      background: var(--lilac); color: #10091C;
+      padding: 9px 13px; border-radius: 8px; font-weight: 700; text-decoration: none;
     }
     .skip:focus { top: 12px; }
     .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
     }
-    .wrap { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+
+    .wrap { width: min(1140px, calc(100% - 48px)); margin: 0 auto; }
+
     h1, h2, h3 {
-      font-family: var(--font-display);
-      letter-spacing: -0.03em;
-      line-height: 1.05;
+      font-family: var(--display);
+      letter-spacing: -0.035em;
+      line-height: 1.04;
       margin: 0;
       text-wrap: balance;
       font-weight: 700;
     }
-    h1 { font-size: clamp(2.4rem, 5vw, 4.4rem); }
-    h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
-    h3 { font-size: 1.25rem; line-height: 1.25; }
+    h1 { font-size: clamp(2.6rem, 6vw, 5rem); }
+    h2 { font-size: clamp(1.9rem, 3.4vw, 2.9rem); }
+    h3 { font-size: 1.2rem; line-height: 1.25; letter-spacing: -0.025em; }
     p { margin: 0; }
-    section { padding: 88px 0; scroll-margin-top: calc(var(--nav) + 12px); }
-    section:focus { outline: none; }
-    .kicker {
-      margin: 0 0 12px;
-      color: var(--accent-light);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-    .section-head { max-width: 40rem; margin-bottom: 28px; }
-    .section-head p { margin-top: 12px; color: var(--text-secondary); }
 
+    section { padding: clamp(64px, 8vw, 112px) 0; scroll-margin-top: calc(var(--nav) + 10px); }
+    .head { max-width: 42rem; margin-bottom: clamp(28px, 4vw, 44px); }
+    .head p { margin-top: 14px; color: var(--muted); font-size: 1.1rem; text-wrap: pretty; }
+
+    /* ---------- nav ---------- */
     .nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      height: var(--nav);
-      display: flex;
-      align-items: center;
-      background: rgba(23, 14, 36, 0.92);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(14px);
+      position: sticky; top: 0; z-index: var(--z-sticky);
+      height: var(--nav); display: flex; align-items: center;
+      background: rgba(18,11,30,.82);
+      border-bottom: 1px solid var(--line-soft);
+      backdrop-filter: blur(16px) saturate(140%);
     }
-    .nav-bar { display: flex; align-items: center; gap: 20px; width: min(1120px, calc(100% - 48px)); }
+    .nav-bar { display: flex; align-items: center; gap: 20px; width: min(1140px, calc(100% - 48px)); }
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.15rem;
-      letter-spacing: -0.03em;
+      display: flex; align-items: center; gap: 10px; text-decoration: none;
+      font-family: var(--display); font-weight: 700; font-size: 1.18rem; letter-spacing: -0.035em;
     }
-    .mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(180deg, #8d62d6, var(--accent-deep));
-      color: var(--text-primary);
-      font-size: 1rem;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
-    }
-    .nav-check {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-    }
+    .brand img { width: 34px; height: 34px; display: block; }
+    .nav-check { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); }
     .nav-burger {
-      display: none;
-      margin-left: auto;
-      width: 44px;
-      height: 44px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface);
-      place-items: center;
-      cursor: pointer;
+      display: none; margin-left: auto; width: 44px; height: 44px;
+      border: 1px solid var(--line); border-radius: var(--r-sm);
+      background: var(--surface-2); place-items: center; cursor: pointer;
     }
-    .nav-burger > span:first-child,
-    .nav-burger > span:first-child::before,
-    .nav-burger > span:first-child::after {
-      display: block;
-      width: 16px;
-      height: 1.5px;
-      background: var(--text-primary);
-      position: relative;
+    .nav-burger i, .nav-burger i::before, .nav-burger i::after {
+      display: block; width: 16px; height: 1.5px; background: var(--ink); position: relative;
     }
-    .nav-burger > span:first-child::before,
-    .nav-burger > span:first-child::after {
-      content: "";
-      position: absolute;
-      left: 0;
-    }
-    .nav-burger > span:first-child::before { top: -5px; }
-    .nav-burger > span:first-child::after { top: 5px; }
-    .nav-check:focus-visible + .nav-burger { outline: 2px solid var(--accent-light); outline-offset: 3px; }
-    .nav-links { display: flex; align-items: center; margin-left: auto; gap: 4px; }
+    .nav-burger i::before, .nav-burger i::after { content: ""; position: absolute; left: 0; }
+    .nav-burger i::before { top: -5px; }
+    .nav-burger i::after { top: 5px; }
+    .nav-check:focus-visible + .nav-burger { outline: 2px solid var(--lilac); outline-offset: 3px; }
+    .nav-links { display: flex; align-items: center; margin-left: auto; gap: 2px; }
     .nav-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.98rem;
-      padding: 8px 10px;
-      border-radius: 8px;
+      color: var(--muted); text-decoration: none; font-weight: 600; font-size: .97rem;
+      padding: 8px 11px; border-radius: var(--r-sm);
+      transition: color .18s var(--ease), background .18s var(--ease);
     }
-    .nav-links a:not(.nav-dl):hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.04); }
-    .nav-links a:active { color: var(--text-primary); }
-    .nav-dl {
-      margin-left: 8px;
-      padding: 8px 14px !important;
-      min-height: 40px;
-    }
+    .nav-links a:not(.nav-dl):hover { color: var(--ink); background: rgba(255,255,255,.05); }
+    .nav-dl { margin-left: 10px; padding: 9px 15px !important; min-height: 40px; }
 
+    /* ---------- buttons ---------- */
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 48px;
-      padding: 0 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      border: 1px solid transparent;
-      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      min-height: 50px; padding: 0 20px; border-radius: 10px;
+      text-decoration: none; font-weight: 700; font-size: 1rem;
+      border: 1px solid transparent; cursor: pointer;
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease),
+                  background .2s var(--ease), border-color .2s var(--ease);
     }
-    .btn svg { width: 18px; height: 18px; flex: none; }
+    .btn svg { width: 19px; height: 19px; flex: none; }
     .btn-fill {
-      color: var(--text-primary);
-      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-deep) 100%);
-      box-shadow: 0 8px 20px rgba(117, 70, 200, 0.28);
+      color: #fff;
+      background: linear-gradient(180deg, #8355d6 0%, var(--amethyst-dp) 100%);
+      box-shadow: 0 10px 24px rgba(117,70,200,.32), inset 0 1px 0 rgba(255,255,255,.22);
     }
-    .btn-fill:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(117, 70, 200, 0.36); }
-    .btn-line {
-      color: var(--text-primary);
-      background: transparent;
-      border-color: var(--border);
-    }
-    .btn-line:hover { background: var(--surface); border-color: rgba(185, 154, 232, 0.45); transform: translateY(-1px); }
-    :focus-visible {
-      outline: 2px solid var(--accent-light);
-      outline-offset: 3px;
-    }
+    .btn-fill:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(117,70,200,.42), inset 0 1px 0 rgba(255,255,255,.22); }
+    .btn-line { color: var(--ink); background: rgba(255,255,255,.03); border-color: var(--line); }
+    .btn-line:hover { background: var(--surface-2); border-color: rgba(185,154,232,.45); transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
 
-    .hero {
-      position: relative;
-      padding: 72px 0 32px;
-      overflow: hidden;
-    }
+    /* ---------- hero ---------- */
+    .hero { position: relative; padding: clamp(36px, 6vw, 72px) 0 clamp(36px, 5vw, 60px); overflow: hidden; }
     .hero::before {
-      content: "";
-      position: absolute;
-      z-index: 0;
-      width: min(720px, 80vw);
-      height: min(720px, 80vw);
-      right: -8%;
-      top: -28%;
-      background: radial-gradient(circle, rgba(117, 70, 200, 0.38), transparent 68%);
-      pointer-events: none;
+      /* the block grid the game is made of */
+      content: ""; position: absolute; inset: 0; z-index: var(--z-art); pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(860px 560px at 74% 34%, #000 0%, transparent 72%);
+      -webkit-mask-image: radial-gradient(860px 560px at 74% 34%, #000 0%, transparent 72%);
     }
     .hero-grid {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.15fr);
-      gap: 48px;
-      align-items: center;
+      position: relative; z-index: var(--z-content);
+      display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.02fr);
+      gap: clamp(24px, 4vw, 48px); align-items: center;
     }
-    .lede { margin-top: 16px; max-width: 36rem; color: var(--text-secondary); font-size: 1.2rem; text-wrap: pretty; }
-    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-    .meta { margin-top: 14px; color: var(--text-secondary); font-size: 0.95rem; }
-    .meta.more { margin-top: 16px; }
-    .meta a { color: var(--accent-light); }
-    .frame {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 8px;
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    }
-    .frame img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      background: #0c0714;
-    }
-    .shot { margin: 0; }
-    .shot figcaption { margin-top: 10px; color: var(--text-secondary); font-size: 1rem; }
-    .shot figcaption b { color: var(--text-primary); font-weight: 700; }
-    .shot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 22px; }
-    .shot-wide { margin-top: 22px; }
+    .lede { margin-top: 20px; max-width: 33rem; color: var(--muted); font-size: 1.2rem; text-wrap: pretty; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .meta { margin-top: 16px; color: var(--muted); font-size: .96rem; }
+    .meta b { color: var(--ink); font-weight: 600; }
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 14px;
+    /* key art: an original floating island, the crowned block above it */
+    .stage { position: relative; width: 100%; aspect-ratio: 100 / 106; }
+    .stage-glow {
+      position: absolute; inset: 4% 2% 0; border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(117,70,200,.55), rgba(117,70,200,.16) 55%, transparent 100%);
+      filter: blur(8px);
     }
-    .feat { grid-column: span 2; }
-    .feat-lead, .features .feat:nth-child(2) { grid-column: span 3; }
-    .feat {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 42%), var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px;
-      transition: transform 160ms ease, border-color 160ms ease;
+    .stage img { position: absolute; display: block; height: auto; user-select: none; -webkit-user-drag: none; }
+    .isl { width: 74%; left: 13%; bottom: 0; animation: bobIsl 11s var(--ease-io) infinite; }
+    .crown { width: 27%; left: 36.5%; top: 2.5%; filter: drop-shadow(0 18px 26px rgba(16,9,28,.55));
+             animation: bobCrown 6.5s var(--ease-io) infinite; }
+    .crown-shadow {
+      position: absolute; left: 41%; top: 37.4%; width: 18%; height: 4.2%; border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(12,4,26,.62), transparent);
+      animation: shadowPulse 6.5s var(--ease-io) infinite;
     }
-    .feat:hover { transform: translateY(-2px); border-color: rgba(185, 154, 232, 0.35); }
-    .feat-lead {
-      background:
-        radial-gradient(420px 220px at 100% 0%, rgba(117, 70, 200, 0.35), transparent 60%),
-        var(--surface-elevated);
-    }
-    .feat-wide { grid-column: span 6; }
-    .icon {
-      width: 36px;
-      height: 36px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      background: rgba(117, 70, 200, 0.18);
-      color: var(--accent-light);
-      margin-bottom: 14px;
-    }
-    .icon svg { width: 20px; height: 20px; }
-    .feat p { margin-top: 8px; color: var(--text-secondary); }
+    .fb { animation: bobBlock 8s var(--ease-io) infinite; filter: drop-shadow(0 10px 14px rgba(0,0,0,.35)); }
+    .fb-gold  { width: 9%;  left: 3%;  top: 33%; animation-duration: 7.4s; animation-delay: -2s; }
+    .fb-ame   { width: 10.5%; left: 85%; top: 17%; animation-duration: 9.2s; animation-delay: -5s; }
+    .fb-grass { width: 7%;  left: 89%; top: 61%; animation-duration: 8.3s; animation-delay: -1s; }
 
-    .play-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-    .play-list li {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 16px;
-      align-items: start;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 18px;
-    }
-    .num {
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      background: var(--accent);
-      color: var(--text-primary);
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-    .play-list p { color: var(--text-secondary); }
-    .play-list strong { color: var(--text-primary); }
+    @keyframes bobIsl     { 50% { translate: 0 -1.2%; } }
+    @keyframes bobCrown   { 50% { translate: 0 -7%; } }
+    @keyframes bobBlock   { 50% { translate: 0 -14%; } }
+    @keyframes shadowPulse { 50% { scale: .82; opacity: .62; } }
 
-    .os-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .os {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-height: 240px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      transition: transform 160ms ease, border-color 160ms ease;
-    }
-    .os:hover { transform: translateY(-2px); border-color: rgba(185, 154, 232, 0.35); }
-    .os .icon { margin-bottom: 4px; }
-    .os p { color: var(--text-secondary); }
-    .os .btn { margin-top: auto; align-self: flex-start; }
-    code {
-      font-family: ui-monospace, Consolas, monospace;
-      font-size: 0.88em;
-      color: var(--text-primary);
-    }
+    /* first-load choreography, only for a visible tab (see the script in <head>) */
+    .intro .hero-copy > * { animation: rise .8s var(--ease) both; }
+    .intro .hero-copy > :nth-child(2) { animation-delay: .07s; }
+    .intro .hero-copy > :nth-child(3) { animation-delay: .14s; }
+    .intro .hero-copy > :nth-child(4) { animation-delay: .21s; }
+    .intro .isl   { animation: islIn 1.2s var(--ease) both, bobIsl 11s var(--ease-io) 1.2s infinite; }
+    .intro .crown { animation: crownIn 1.3s var(--ease) .28s both, bobCrown 6.5s var(--ease-io) 1.58s infinite; }
+    .intro .crown-shadow { animation: fadeIn 1s var(--ease) .5s both, shadowPulse 6.5s var(--ease-io) 1.58s infinite; }
+    .intro .fb    { animation-name: blockIn, bobBlock; animation-duration: .9s, 8s; animation-timing-function: var(--ease), var(--ease-io);
+                    animation-fill-mode: both, none; animation-iteration-count: 1, infinite; }
+    .intro .fb-gold  { animation-delay: .62s, 1.5s; animation-duration: .9s, 7.4s; }
+    .intro .fb-ame   { animation-delay: .72s, 1.6s; animation-duration: .9s, 9.2s; }
+    .intro .fb-grass { animation-delay: .82s, 1.7s; animation-duration: .9s, 8.3s; }
 
-    .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-    .step {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
-    }
-    .step p { color: var(--text-secondary); margin-top: 10px; }
-    .note {
-      margin-top: 16px;
-      padding: 16px 18px;
-      border-radius: var(--radius);
-      border: 1px solid rgba(185, 154, 232, 0.35);
-      background: var(--surface);
-      color: var(--text-secondary);
-    }
-    .note strong { color: var(--text-primary); }
+    @keyframes rise    { from { opacity: 0; transform: translateY(14px); } }
+    @keyframes islIn   { from { opacity: 0; transform: translateY(7%); } }
+    @keyframes crownIn { from { opacity: 0; transform: translateY(-16%) scale(.9); } }
+    @keyframes blockIn { from { opacity: 0; transform: scale(.55); } }
+    @keyframes fadeIn  { from { opacity: 0; } }
 
-    details {
-      border-bottom: 1px solid var(--border);
-    }
-    summary {
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 1.08rem;
-      min-height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+    /* ---------- proof strip ---------- */
+    .proof {
+      position: relative; z-index: var(--z-content);
+      margin: clamp(30px, 4vw, 48px) 0 0;
+      border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft);
+      padding: 18px 0;
+      display: flex; flex-wrap: wrap; gap: 10px 34px;
       list-style: none;
     }
-    summary::-webkit-details-marker { display: none; }
-    summary::after {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-right: 1.5px solid var(--accent-light);
-      border-bottom: 1.5px solid var(--accent-light);
-      transform: rotate(45deg);
-      flex: none;
-      margin-top: -4px;
-    }
-    details[open] summary::after { transform: rotate(225deg); margin-top: 4px; }
-    details p { margin: 0 0 16px; color: var(--text-secondary); max-width: 68ch; }
+    .proof li { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .99rem; }
+    .proof b { color: var(--ink); font-weight: 600; }
+    .tick { width: 16px; height: 16px; flex: none; color: var(--grass); }
 
-    footer {
-      padding: 28px 0 40px;
-      color: var(--text-secondary);
-      font-size: 0.98rem;
-      border-top: 1px solid var(--border);
+    /* ---------- shared ---------- */
+    .frame {
+      position: relative;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 7px;
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.07);
     }
-    footer a { color: var(--text-primary); }
+    .frame::after {
+      content: ""; position: absolute; inset: -1px; border-radius: var(--r);
+      background: linear-gradient(145deg, rgba(185,154,232,.42), transparent 42%, transparent 62%, rgba(117,70,200,.28));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      padding: 1px; pointer-events: none;
+    }
+    .frame img { display: block; width: 100%; height: auto; border-radius: 8px; background: #0c0714; }
+    .shot { margin: 0; }
+    .shot figcaption { margin-top: 12px; color: var(--muted); font-size: 1rem; }
+    .shot figcaption b { color: var(--ink); font-weight: 700; }
+    .blk { width: 21px; height: 22px; flex: none; display: block; margin-top: 3px; }
 
+    /* ---------- screenshots ---------- */
+    .shot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 22px; }
+
+    /* ---------- two ways in ---------- */
+    .ways-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(0,.92fr); gap: clamp(28px,4.5vw,64px); align-items: center; }
+    .ways { margin-top: 6px; }
+    .way { padding: 20px 0; border-bottom: 1px solid var(--line-soft); }
+    .way:first-child { padding-top: 0; }
+    .way h3 { display: flex; align-items: baseline; gap: 10px; font-size: 1.35rem; }
+    .way h3 small { font-family: var(--body); font-size: .9rem; font-weight: 600; letter-spacing: 0; color: var(--lilac); }
+    .way p { color: var(--muted); margin-top: 7px; }
+    .aside { margin-top: 20px; color: var(--muted); font-size: .99rem; }
+    .aside b { color: var(--ink); }
+
+    /* ---------- what you get ---------- */
+    .feat-split { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.05fr); gap: clamp(28px,5vw,72px); align-items: start; }
+    .statement h2 { font-size: clamp(2.2rem, 4.4vw, 3.6rem); }
+    .statement h2 span { color: var(--lilac); }
+    .statement p { margin-top: 18px; color: var(--muted); font-size: 1.1rem; max-width: 30rem; text-wrap: pretty; }
+    .rows { display: grid; }
+    .row { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; padding: 20px 0; border-bottom: 1px solid var(--line-soft); }
+    .row:first-child { padding-top: 6px; }
+    .row:last-child { border-bottom: 0; }
+    .row p { color: var(--muted); margin-top: 5px; }
+
+    /* ---------- starter pack ---------- */
+    .pack { display: grid; grid-template-columns: repeat(auto-fit, minmax(292px, 1fr)); gap: 0 clamp(24px,4vw,56px); }
+    .mod { display: grid; grid-template-columns: auto 1fr; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line-soft); }
+    .mod h3 { font-size: 1.06rem; }
+    .mod p { color: var(--muted); margin-top: 4px; font-size: .99rem; }
+
+    /* ---------- download ---------- */
+    .dl-band {
+      background:
+        radial-gradient(760px 380px at 18% 0%, rgba(117,70,200,.30), transparent 64%),
+        linear-gradient(180deg, var(--bg-2), var(--bg) 85%);
+      border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft);
+    }
+    .os-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .os {
+      display: flex; flex-direction: column; gap: 9px; min-height: 254px;
+      background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r);
+      padding: clamp(20px,2.4vw,26px);
+      transition: transform .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
+    }
+    .os:hover { transform: translateY(-3px); border-color: rgba(185,154,232,.4); box-shadow: var(--shadow); }
+    .os-top { display: flex; align-items: center; gap: 11px; color: var(--lilac); }
+    .os-top svg { width: 22px; height: 22px; }
+    .os-top span { font-family: var(--display); font-weight: 700; font-size: 1.05rem; letter-spacing: -.02em; color: var(--ink); }
+    .os p { color: var(--muted); }
+    .os .btn { margin-top: auto; align-self: stretch; }
+    code {
+      font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+      font-size: .86em; color: var(--ink); overflow-wrap: anywhere;
+    }
+    .verify { margin-top: 20px; }
+    .verify summary { cursor: pointer; font-size: .97rem; font-weight: 600; color: var(--muted); min-height: 40px; display: flex; align-items: center; }
+    .verify summary:hover { color: var(--ink); }
+    .sums { margin: 8px 0 0; display: grid; gap: 12px; }
+    .sums div { background: var(--bg-2); border: 1px solid var(--line-soft); border-radius: var(--r-sm); padding: 12px 14px; }
+    .sums dt { color: var(--muted); font-size: .9rem; margin-bottom: 4px; }
+    .sums dd { margin: 0; }
+    .sums code { font-size: .8rem; color: var(--lilac); }
+    .how { margin-top: 12px; color: var(--muted); font-size: .95rem; }
+
+    /* ---------- requirements ---------- */
+    .req { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 0 clamp(24px,4vw,52px); margin: 0; }
+    .req > div { padding: 18px 0; border-bottom: 1px solid var(--line-soft); }
+    .req dt { font-family: var(--display); font-weight: 700; font-size: 1.02rem; letter-spacing: -.02em; }
+    .req dd { margin: 5px 0 0; color: var(--muted); font-size: .99rem; }
+
+    /* ---------- install: the one real sequence on the page ---------- */
+    .steps { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+    .step { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r); padding: 19px; }
+    .step p { color: var(--muted); margin-top: 11px; }
+    .num {
+      width: 29px; height: 29px; display: grid; place-items: center; border-radius: 8px;
+      background: linear-gradient(180deg, #8355d6, var(--amethyst-dp)); color: #fff;
+      font-family: var(--display); font-weight: 700; font-size: .9rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.25);
+    }
+    .note {
+      margin-top: 20px; padding: 17px 19px; border-radius: var(--r);
+      border: 1px solid rgba(242,179,46,.32); background: rgba(242,179,46,.07); color: var(--muted);
+      display: grid; grid-template-columns: auto 1fr; gap: 13px; align-items: start;
+    }
+    .note strong { color: var(--ink); }
+    .note svg { width: 20px; height: 20px; color: var(--gold); margin-top: 2px; }
+
+    /* ---------- upstream ---------- */
+    .up { display: grid; grid-template-columns: auto minmax(0,1fr); gap: clamp(22px,4vw,44px); align-items: center;
+          background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(24px,3.4vw,40px); }
+    .up img { width: 108px; height: 108px; display: block; }
+    .up p { color: var(--muted); margin-top: 12px; max-width: 62ch; }
+    .up a { color: var(--lilac); }
+
+    /* ---------- faq ---------- */
+    details.q { border-bottom: 1px solid var(--line); }
+    details.q summary {
+      cursor: pointer; font-weight: 700; font-size: 1.07rem; min-height: 58px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      list-style: none; font-family: var(--display); letter-spacing: -.02em;
+    }
+    details.q summary::-webkit-details-marker { display: none; }
+    details.q summary::after {
+      content: ""; width: 8px; height: 8px; flex: none; margin-top: -4px;
+      border-right: 1.6px solid var(--lilac); border-bottom: 1.6px solid var(--lilac);
+      transform: rotate(45deg); transition: transform .2s var(--ease);
+    }
+    details.q[open] summary::after { transform: rotate(225deg); margin-top: 4px; }
+    details.q p { margin: 0 0 18px; color: var(--muted); max-width: 68ch; }
+
+    /* ---------- footer ---------- */
+    footer { padding: 34px 0 46px; color: var(--muted); font-size: .97rem; border-top: 1px solid var(--line); }
+    .foot { display: flex; flex-wrap: wrap; gap: 18px 26px; align-items: center; justify-content: space-between; }
+    .foot-brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; color: var(--ink); letter-spacing: -.03em; }
+    .foot-brand img { width: 28px; height: 28px; }
+    .foot p { max-width: 70ch; }
+    footer a { color: var(--ink); }
+
+    /* ---------- reveals: additive, and each one fits what it reveals ---------- */
+    @keyframes openShot { from { opacity: .35; transform: scale(.965); clip-path: inset(5% 4% round 16px); } to { opacity: 1; transform: none; clip-path: inset(0 round 0); } }
+    @keyframes up { from { opacity: 0; transform: translateY(16px); } }
+    .js .open.in { animation: openShot .9s var(--ease) both; }
+    .js .up-in.in { animation: up .7s var(--ease) both; }
+    .js .stagger.in > * { animation: up .6s var(--ease) both; }
+    .js .stagger.in > :nth-child(2) { animation-delay: .06s; }
+    .js .stagger.in > :nth-child(3) { animation-delay: .12s; }
+    .js .stagger.in > :nth-child(4) { animation-delay: .18s; }
+    .js .stagger.in > :nth-child(5) { animation-delay: .24s; }
+    .js .stagger.in > :nth-child(6) { animation-delay: .30s; }
+    .js .d1.in { animation-delay: .08s; }
+
+    @media (max-width: 980px) {
+      .feat-split, .ways-grid { grid-template-columns: 1fr; }
+    }
     @media (max-width: 900px) {
-      .wrap, .nav-bar { width: min(1120px, calc(100% - 32px)); }
+      .wrap, .nav-bar { width: min(1140px, calc(100% - 32px)); }
       .nav-burger { display: grid; }
       .nav-links {
-        display: none;
-        position: absolute;
-        top: var(--nav);
-        left: 0;
-        right: 0;
-        margin: 0;
-        padding: 8px 16px 16px;
-        flex-direction: column;
-        align-items: stretch;
-        background: var(--bg-secondary);
-        border-bottom: 1px solid var(--border);
-        gap: 2px;
+        display: none; position: absolute; top: var(--nav); left: 0; right: 0;
+        margin: 0; padding: 10px 16px 18px; flex-direction: column; align-items: stretch;
+        background: var(--bg-2); border-bottom: 1px solid var(--line); gap: 2px;
       }
       .nav-check:checked ~ .nav-links { display: flex; }
-      .nav-links a { padding: 12px 10px; }
-      .nav-dl { margin: 8px 0 0; text-align: center; }
-      .hero { padding-top: 40px; }
-      .hero-grid, .shot-grid, .os-grid, .steps { grid-template-columns: 1fr; }
-      .features { grid-template-columns: 1fr; }
-      .feat, .feat-lead, .features .feat:nth-child(2), .feat-wide { grid-column: auto; }
-      section { padding: 64px 0; }
-      h1 { font-size: clamp(2.15rem, 9vw, 3rem); }
+      .nav-links a { padding: 13px 10px; }
+      .nav-dl { margin: 10px 0 0; text-align: center; }
+      .hero-grid, .shot-grid, .os-grid { grid-template-columns: 1fr; }
+      .stage { max-width: 480px; margin: 0 auto; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .up { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       .cta-row { flex-direction: column; }
       .cta-row .btn { width: 100%; }
-      .os .btn { width: 100%; }
+      .steps { grid-template-columns: 1fr; }
+      .proof { gap: 12px 22px; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .btn, .feat, .os { transition: none; }
-      .btn-fill:hover, .btn-line:hover, .feat:hover, .os:hover { transform: none; }
+      *, *::before, *::after { animation: none !important; transition-duration: .001ms !important; }
     }
     @media (prefers-reduced-transparency: reduce) {
-      .nav { backdrop-filter: none; background: var(--bg-secondary); }
+      .nav { backdrop-filter: none; background: var(--bg-2); }
     }
   </style>
 </head>
 <body>
   <a class="skip" href="#top">Skip to content</a>
+
   <header class="nav">
     <div class="wrap nav-bar">
-      <a class="brand" href="#top" translate="no"><span class="mark" aria-hidden="true">Z</span> Zaru</a>
+      <a class="brand" href="#top" translate="no">
+        <img src="brand/zaru-mark.webp" width="34" height="34" alt="" aria-hidden="true">
+        Zaru
+      </a>
       <input class="nav-check" id="nav-open" type="checkbox">
-      <label class="nav-burger" for="nav-open"><span></span><span class="sr-only">Menu</span></label>
+      <label class="nav-burger" for="nav-open"><i></i><span class="sr-only">Menu</span></label>
       <nav class="nav-links" aria-label="Page">
-        <a href="#features">Features</a>
         <a href="#screenshots">Screenshots</a>
-        <a href="#play">How to Play</a>
-        <a href="#download">Download</a>
+        <a href="#play">How to play</a>
+        <a href="#features">Features</a>
+        <a href="#pack">Starter pack</a>
         <a href="https://discord.gg/Tfd7y4FjP" target="_blank" rel="noopener noreferrer">Discord</a>
         <a class="btn btn-fill nav-dl" href="#download">Download</a>
       </nav>
@@ -460,205 +492,289 @@
   </header>
 
   <main id="top">
+    <!-- ================= hero ================= -->
     <section class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <p class="kicker">Minecraft launcher</p>
-          <h1>Minecraft, ready to play.</h1>
-          <p class="lede">Your game. Your mods. Your world. Everything ready when you are.</p>
-          <div class="cta-row">
-            <a class="btn btn-fill" href="downloads/Zaru.Launcher_99.0.0_x64-setup.exe" download="Zaru.Launcher_99.0.0_x64-setup.exe">
-              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 9h18M8 20h8"/></svg>
-              Download for Windows
-            </a>
-            <a class="btn btn-line" href="downloads/Zaru.Launcher_99.0.0_amd64.deb" download="Zaru.Launcher_99.0.0_amd64.deb">
-              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M7 9h6M7 13h10"/></svg>
-              Download for Linux
-            </a>
+      <div class="wrap">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1>Minecraft,<br>ready to play.</h1>
+            <p class="lede">Zaru installs Minecraft, Java and a tuned Fabric pack for you. Sign in with Microsoft or start with a nickname, then press Play.</p>
+            <div class="cta-row">
+              <a class="btn btn-fill" href="downloads/Zaru.Launcher_99.0.0_x64-setup.exe" download="Zaru.Launcher_99.0.0_x64-setup.exe">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 9h18M8 20h8"/></svg>
+                Download for Windows
+              </a>
+              <a class="btn btn-line" href="downloads/Zaru.Launcher_99.0.0_amd64.deb" download="Zaru.Launcher_99.0.0_amd64.deb">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M7 9h6M7 13h10"/></svg>
+                Download for Linux
+              </a>
+            </div>
+            <p class="meta">Version <b>99.0.0</b> · Windows 56.7&nbsp;MB · Linux 61.8&nbsp;MB · free</p>
           </div>
-          <p class="meta">Version 99.0.0 · Windows setup about 57&nbsp;MB · Linux .deb about 62&nbsp;MB</p>
+
+          <div class="stage" role="img" aria-label="A small floating island of grass, stone and amethyst crystals, with the crowned Zaru block hovering above it.">
+            <div class="stage-glow"></div>
+            <img class="isl" src="brand/island.webp" width="842" height="1142" alt="" fetchpriority="high">
+            <span class="crown-shadow"></span>
+            <img class="crown" src="brand/zaru-mark-512.webp" width="512" height="512" alt="">
+            <img class="fb fb-gold" src="brand/block-gold.webp" width="122" height="131" alt="" loading="lazy">
+            <img class="fb fb-ame" src="brand/block-amethyst.webp" width="122" height="131" alt="" loading="lazy">
+            <img class="fb fb-grass" src="brand/block-grass.webp" width="122" height="131" alt="" loading="lazy">
+          </div>
         </div>
-        <figure class="shot">
-          <div class="frame">
-            <img src="shots/play.webp" width="1200" height="760" alt="Zaru Launcher lobby with a character, Minecraft 1.21.11 on Fabric, and a Play button">
-          </div>
-        </figure>
+
+        <ul class="proof">
+          <li><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Java</b> comes with it</span></li>
+          <li><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Fabric 1.21.11</b> starter instance</span></li>
+          <li><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Six</b> performance mods preloaded</span></li>
+          <li><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><b>Microsoft</b> account or a nickname</span></li>
+        </ul>
       </div>
     </section>
 
+    <!-- ================= screenshots ================= -->
     <section id="screenshots">
-      <span id="snapshots" hidden></span>
       <div class="wrap">
-        <div class="section-head">
-          <p class="kicker">Screenshots</p>
+        <div class="head">
           <h2>The launcher, open.</h2>
           <p>These are the Linux build, version 99.0.0, on a fresh start. The window is 1200 by 760.</p>
         </div>
-        <figure class="shot">
+        <figure class="shot open">
           <div class="frame">
-            <img src="shots/play.webp" width="1200" height="760" alt="Zaru Launcher lobby with a character, Minecraft 1.21.11 on Fabric, and a Play button" loading="lazy">
+            <img src="shots/play.webp" width="1200" height="760" loading="lazy"
+                 alt="The Zaru Launcher lobby: a character in the centre, Minecraft 1.21.11 on Fabric selected, and a large Play button.">
           </div>
           <figcaption><b>Lobby.</b> The character, the Fabric starter, and Play.</figcaption>
         </figure>
         <div class="shot-grid">
-          <figure class="shot">
+          <figure class="shot open">
             <div class="frame">
-              <img src="shots/account.webp" width="1200" height="760" alt="First screen titled Game account, with Licensed as the main button and Offline underneath" loading="lazy">
-            </div>
-            <figcaption><b>First screen.</b> Licensed comes first. A nickname is the other way in.</figcaption>
-          </figure>
-          <figure class="shot">
-            <div class="frame">
-              <img src="shots/skin.webp" width="1200" height="760" alt="Skin wardrobe with a character preview, Looks selected, and an Upload skin button" loading="lazy">
+              <img src="shots/skin.webp" width="1200" height="760" loading="lazy"
+                   alt="The skin wardrobe with a character preview, the Looks tab selected and an Upload skin button.">
             </div>
             <figcaption><b>Wardrobe.</b> Looks, skins, and an upload.</figcaption>
           </figure>
-        </div>
-        <figure class="shot shot-wide">
-          <div class="frame">
-            <img src="shots/library.webp" width="1200" height="760" alt="Library of Minecraft versions and modpacks, including Minecraft 1.21.11 Fabric and several modpacks" loading="lazy">
-          </div>
-          <figcaption><b>Library.</b> Minecraft versions and modpacks, including the 1.21.11 Fabric starter.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section id="features">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="kicker">Features</p>
-          <h2>What you get on the first launch.</h2>
-          <p>Open the app, choose how you will play, and press Play. This is the Millida launcher, renamed and built for friends on Windows and Linux.</p>
-        </div>
-        <div class="features">
-          <article class="feat feat-lead">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3"/><path d="M5 19c1.4-3 3.8-4.5 7-4.5S17.6 16 19 19"/></svg></div>
-            <h3>Microsoft account</h3>
-            <p>A licensed account uses Microsoft’s own device login. The password is typed on Microsoft’s site, not in Zaru.</p>
-          </article>
-          <article class="feat">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
-            <h3>Offline nickname</h3>
-            <p>A nickname of 3 to 16 letters, digits, or underscores starts a local world. Realms and official servers will refuse it.</p>
-          </article>
-          <article class="feat">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 8h8v3a4 4 0 0 1-8 0V8z"/><path d="M8 9H6a3 3 0 0 0 0 6h2M16 9h2a3 3 0 0 1 0 6h-2"/><path d="M12 15v3"/></svg></div>
-            <h3>Java included</h3>
-            <p>You do not install Java yourself. Press Play and the launcher brings the runtime, libraries, and game files down before the world opens.</p>
-          </article>
-          <article class="feat feat-wide">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 8l8-4 8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4M4 16l8 4 8-4"/></svg></div>
-            <h3>Fabric starter</h3>
-            <p>The default instance is Minecraft 1.21.11 on Fabric, with Sodium, Lithium, ImmediatelyFast, Entity Culling, More Culling, and Dynamic FPS already in the pack.</p>
-          </article>
-          <article class="feat">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 4h5l5 5v11H8z"/><path d="M13 4v5h5"/></svg></div>
-            <h3>Mods and modpacks</h3>
-            <p>Add Fabric or other packs from the catalog on top of the starter instance, and keep each build separate.</p>
-          </article>
-          <article class="feat">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="8" cy="9" r="2.2"/><circle cx="16" cy="9" r="2.2"/><path d="M4 18c.6-2.2 2.2-3.4 4-3.4s3.4 1.2 4 3.4M12 18c.6-2.2 2.2-3.4 4-3.4s3.4 1.2 4 3.4"/></svg></div>
-            <h3>Skins and friends</h3>
-            <p>Change a skin and invite people from the lobby. Friends, the wardrobe, and Millida’s own servers use their account when you want those.</p>
-          </article>
+          <figure class="shot open d1">
+            <div class="frame">
+              <img src="shots/library.webp" width="1200" height="760" loading="lazy"
+                   alt="The library of Minecraft versions and modpacks, including the Minecraft 1.21.11 Fabric starter.">
+            </div>
+            <figcaption><b>Library.</b> Versions and modpacks, including the 1.21.11 Fabric starter.</figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
+    <!-- ================= two ways in ================= -->
     <section id="play">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="kicker">How to play</p>
-          <h2>How you play.</h2>
-          <p>Pick one on the first screen. You can add the other later.</p>
+      <div class="wrap ways-grid">
+        <figure class="shot open">
+          <div class="frame">
+            <img src="shots/account.webp" width="1200" height="760" loading="lazy"
+                 alt="The first screen, titled Game account, with Licensed as the main button and Offline underneath.">
+          </div>
+          <figcaption><b>First screen.</b> Licensed comes first. A nickname is the other way in.</figcaption>
+        </figure>
+        <div>
+          <div class="head">
+            <h2>Two ways in.</h2>
+            <p>Pick one on the first screen. You can add the other later.</p>
+          </div>
+          <div class="ways stagger">
+            <div class="way">
+              <h3>Licensed <small>Microsoft account</small></h3>
+              <p>Microsoft shows a device code at microsoft.com/link and you approve it there. Zaru never sees the Microsoft password. Realms and official servers need this, with an account that owns Minecraft.</p>
+            </div>
+            <div class="way">
+              <h3>Offline <small>a nickname</small></h3>
+              <p>Three to sixteen letters, digits or underscores starts a local world. Realms and official servers will refuse it.</p>
+            </div>
+          </div>
+          <p class="aside"><b>Millida, when you want it.</b> Skins, friends, parties and Millida SMP talk to Millida’s servers. Play itself never waits on that sign-in.</p>
         </div>
-        <ol class="play-list">
-          <li><span class="num">1</span><p><strong>Licensed.</strong> Microsoft shows a device code at microsoft.com/link. Zaru never asks for the Microsoft password.</p></li>
-          <li><span class="num">2</span><p><strong>Offline.</strong> A nickname of 3 to 16 letters, digits, or underscores. That is enough to start a world. Realms and official servers will refuse it.</p></li>
-          <li><span class="num">3</span><p><strong>Millida, when you want it.</strong> Skins, friends, parties, and Millida SMP still talk to Millida’s servers. Play itself does not wait on that sign-in.</p></li>
-          <li><span class="num">4</span><p><strong>Your mods.</strong> Add Fabric or other packs from the catalog on top of the starter instance, and keep each build separate.</p></li>
-        </ol>
       </div>
     </section>
 
-    <section id="download">
+    <!-- ================= what you get ================= -->
+    <section id="features">
+      <div class="wrap feat-split">
+        <div class="statement">
+          <h2>Press Play.<br><span>Zaru handles the rest.</span></h2>
+          <p>This is the Millida launcher, renamed and built for friends on Windows and Linux. The setup that usually takes an evening is already done.</p>
+        </div>
+        <div class="rows stagger">
+          <div class="row">
+            <img class="blk" src="brand/icon-block.webp" width="21" height="22" alt="">
+            <div>
+              <h3>Java is handled for you</h3>
+              <p>You never install Java yourself. Press Play and the launcher brings down the runtime, the libraries and the game files before the world opens.</p>
+            </div>
+          </div>
+          <div class="row">
+            <img class="blk" src="brand/icon-block.webp" width="21" height="22" alt="">
+            <div>
+              <h3>A Fabric starter, already tuned</h3>
+              <p>The default instance is Minecraft 1.21.11 on Fabric with six performance mods in the pack. Nothing to configure.</p>
+            </div>
+          </div>
+          <div class="row">
+            <img class="blk" src="brand/icon-block.webp" width="21" height="22" alt="">
+            <div>
+              <h3>Mods and modpacks</h3>
+              <p>Add Fabric or other packs from the catalog on top of the starter instance, and keep every build in its own place.</p>
+            </div>
+          </div>
+          <div class="row">
+            <img class="blk" src="brand/icon-block.webp" width="21" height="22" alt="">
+            <div>
+              <h3>Skins, friends and parties</h3>
+              <p>Change a skin and invite people from the lobby. Friends, the wardrobe and Millida’s own servers use that account when you want them.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= starter pack ================= -->
+    <section id="pack">
       <div class="wrap">
-        <div class="section-head">
-          <p class="kicker">Download</p>
+        <div class="head">
+          <h2>What’s in the starter pack.</h2>
+          <p>The default instance is Minecraft 1.21.11 on Fabric. Every mod below is a performance mod. None of them change how the game plays.</p>
+        </div>
+        <div class="pack stagger">
+          <div class="mod"><img class="blk" src="brand/icon-block.webp" width="21" height="22" alt=""><div><h3>Sodium</h3><p>A rewrite of the rendering engine. The single biggest frame-rate gain in the pack.</p></div></div>
+          <div class="mod"><img class="blk" src="brand/icon-block.webp" width="21" height="22" alt=""><div><h3>Lithium</h3><p>Optimises the game’s own logic (mobs, physics, chunks) without changing behaviour.</p></div></div>
+          <div class="mod"><img class="blk" src="brand/icon-block.webp" width="21" height="22" alt=""><div><h3>ImmediatelyFast</h3><p>Speeds up the smaller draw calls: menus, text, items and the HUD.</p></div></div>
+          <div class="mod"><img class="blk" src="brand/icon-block.webp" width="21" height="22" alt=""><div><h3>Entity Culling</h3><p>Stops drawing mobs and chests that are hidden behind blocks you can see.</p></div></div>
+          <div class="mod"><img class="blk" src="brand/icon-block.webp" width="21" height="22" alt=""><div><h3>More Culling</h3><p>Extends the same idea to block entities and the pieces around them.</p></div></div>
+          <div class="mod"><img class="blk" src="brand/icon-block.webp" width="21" height="22" alt=""><div><h3>Dynamic FPS</h3><p>Drops the frame rate while the window sits in the background, so the laptop stays quiet.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= download ================= -->
+    <section id="download" class="dl-band">
+      <div class="wrap">
+        <div class="head">
           <h2>Download Zaru.</h2>
           <p>Version 99.0.0 for 64-bit Windows and Debian-based Linux. macOS is not in this build.</p>
         </div>
-        <div class="os-grid">
+        <div class="os-grid stagger">
           <article class="os">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 9h18M8 20h8"/></svg></div>
-            <p class="kicker">Windows</p>
+            <div class="os-top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 9h18M8 20h8"/></svg>
+              <span>Windows</span>
+            </div>
             <h3>Setup installer</h3>
-            <p><code translate="no">Zaru.Launcher_99.0.0_x64-setup.exe</code><br>About 57&nbsp;MB</p>
+            <p><code translate="no">Zaru.Launcher_99.0.0_x64-setup.exe</code><br>56.7&nbsp;MB · Windows 10 and 11, 64-bit</p>
             <a class="btn btn-fill" href="downloads/Zaru.Launcher_99.0.0_x64-setup.exe" download="Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
           </article>
           <article class="os">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M7 9h6M7 13h10"/></svg></div>
-            <p class="kicker">Linux</p>
+            <div class="os-top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M7 9h6M7 13h10"/></svg>
+              <span>Linux</span>
+            </div>
             <h3>Debian package</h3>
-            <p><code translate="no">Zaru.Launcher_99.0.0_amd64.deb</code><br>About 62&nbsp;MB · Ubuntu and Debian</p>
+            <p><code translate="no">Zaru.Launcher_99.0.0_amd64.deb</code><br>61.8&nbsp;MB · Debian and Ubuntu, 64-bit</p>
             <a class="btn btn-line" href="downloads/Zaru.Launcher_99.0.0_amd64.deb" download="Zaru.Launcher_99.0.0_amd64.deb">Download for Linux</a>
           </article>
         </div>
-        <p class="meta more"><a href="#install">Install steps</a></p>
+
+        <details class="verify">
+          <summary>Check the file you downloaded</summary>
+          <dl class="sums">
+            <div>
+              <dt>Zaru.Launcher_99.0.0_x64-setup.exe, SHA-256</dt>
+              <dd><code translate="no">b707e59ca625f2b9dc643d5372b8d49f24873b7fd70990899962db572b94558f</code></dd>
+            </div>
+            <div>
+              <dt>Zaru.Launcher_99.0.0_amd64.deb, SHA-256</dt>
+              <dd><code translate="no">82cf6ca35037a20f62251999b3fc4b368dbfbde8d9be691af9c3aa883548f9d5</code></dd>
+            </div>
+          </dl>
+          <p class="how">
+            Windows: <code translate="no">Get-FileHash .\Zaru.Launcher_99.0.0_x64-setup.exe</code> ·
+            Linux: <code translate="no">sha256sum Zaru.Launcher_99.0.0_amd64.deb</code>
+          </p>
+        </details>
       </div>
     </section>
 
+    <!-- ================= requirements ================= -->
+    <section id="requirements">
+      <div class="wrap">
+        <div class="head">
+          <h2>What it needs.</h2>
+          <p>Not much. The launcher downloads the heavy parts itself on the first run.</p>
+        </div>
+        <dl class="req">
+          <div><dt>Windows</dt><dd>Windows 10 or 11, 64-bit. The setup installs for the current user, so it does not ask for an administrator.</dd></div>
+          <div><dt>Linux</dt><dd>A 64-bit Debian or Ubuntu based system. The package pulls in <code translate="no">gstreamer1.0-plugins-base</code>, <code translate="no">-good</code> and <code translate="no">-libav</code>.</dd></div>
+          <div><dt>Disk</dt><dd>Room for the launcher, Minecraft and the Java it downloads. Modpacks need more on top.</dd></div>
+          <div><dt>Internet</dt><dd>Needed on the first launch, to bring down Java and the game files.</dd></div>
+          <div><dt>Java</dt><dd>Nothing to install. The launcher fetches the runtime the chosen version wants.</dd></div>
+          <div><dt>A Minecraft licence</dt><dd>Only for Realms and official multiplayer. A nickname is enough for a local world.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= install ================= -->
     <section id="install">
       <div class="wrap">
-        <div class="section-head">
-          <p class="kicker">Install</p>
+        <div class="head">
           <h2>Install it, then press Play.</h2>
         </div>
-        <div class="steps">
-          <article class="step"><span class="num">1</span><p>Download the file for your system.</p></article>
-          <article class="step"><span class="num">2</span><p>If the browser wraps it in a zip, unzip that first.</p></article>
-          <article class="step"><span class="num">3</span><p>Windows: run the setup exe. Linux: install the .deb, then open Zaru Launcher.</p></article>
-          <article class="step"><span class="num">4</span><p>Choose a nickname or Microsoft, then Play. The first launch downloads the game.</p></article>
-        </div>
-        <p class="note"><strong>This installer is not code-signed.</strong> If Windows says it protected your PC, choose More info, then Run anyway. That warning is expected on this personal build.</p>
+        <ol class="steps stagger">
+          <li class="step"><span class="num">1</span><p>Download the file for your system.</p></li>
+          <li class="step"><span class="num">2</span><p>If the browser wraps it in a zip, unzip that first.</p></li>
+          <li class="step"><span class="num">3</span><p>Windows: run the setup exe. Linux: install the .deb, then open Zaru Launcher.</p></li>
+          <li class="step"><span class="num">4</span><p>Choose Microsoft or a nickname, then Play. The first launch downloads the game.</p></li>
+        </ol>
+        <p class="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.4 17.5A1.8 1.8 0 0 0 4 20.2h16a1.8 1.8 0 0 0 1.6-2.7L13.7 3.9a1.8 1.8 0 0 0-3.4 0z"/></svg>
+          <span><strong>This installer is not code-signed.</strong> If Windows says it protected your PC, choose More info, then Run anyway. That warning is expected on a personal build like this one.</span>
+        </p>
       </div>
     </section>
 
+    <!-- ================= upstream ================= -->
+    <section id="upstream">
+      <div class="wrap">
+        <div class="up up-in">
+          <img src="brand/zaru-mark.webp" width="108" height="108" alt="" aria-hidden="true">
+          <div>
+            <h2>Built on Millida.</h2>
+            <p>Zaru is a personal build of the <a href="https://github.com/millida/launcher" target="_blank" rel="noopener noreferrer">Millida launcher</a>, which is open source under the GPL-3.0. The name and the look are the only things that changed. The accounts, skins and servers behind it are still Millida’s.</p>
+            <p>Millida did not make this build and does not support it. It is not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= faq ================= -->
     <section id="faq">
       <div class="wrap">
-        <div class="section-head">
-          <p class="kicker">FAQ</p>
+        <div class="head">
           <h2>Questions</h2>
         </div>
-        <details>
-          <summary>Is it free?</summary>
-          <p>Yes. This download has no price and the installer does not add a second app.</p>
-        </details>
-        <details>
-          <summary>Do I need to own Minecraft?</summary>
-          <p>Not to open a local world. A nickname starts the game. Official multiplayer and Realms need a real Microsoft account that owns Minecraft.</p>
-        </details>
-        <details>
-          <summary>Do I install Java first?</summary>
-          <p>No. Play downloads the Java build the game needs.</p>
-        </details>
-        <details>
-          <summary>Is this the official Millida launcher?</summary>
-          <p>No. Zaru is a personal build of the open-source Millida launcher (GPL-3.0). Millida did not make this build and does not support it. It is not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang.</p>
-        </details>
-        <details>
-          <summary>Why is there no macOS download?</summary>
-          <p>This release is Windows and Linux only.</p>
-        </details>
+        <details class="q"><summary>Is it free?</summary><p>Yes. This download has no price and the installer does not add a second app.</p></details>
+        <details class="q"><summary>Do I need to own Minecraft?</summary><p>Not to open a local world. A nickname starts the game. Official multiplayer and Realms need a real Microsoft account that owns Minecraft.</p></details>
+        <details class="q"><summary>Do I install Java first?</summary><p>No. Play downloads the Java build that the chosen version of the game needs.</p></details>
+        <details class="q"><summary>Why does Windows warn me about the file?</summary><p>The installer is not code-signed, so SmartScreen shows a blue warning. Choose More info, then Run anyway. The SHA-256 of both files is listed in the download section if you want to check what you got.</p></details>
+        <details class="q"><summary>Is this the official Millida launcher?</summary><p>No. Zaru is a personal build of the open-source Millida launcher (GPL-3.0). Millida did not make this build and does not support it. It is not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang.</p></details>
+        <details class="q"><summary>Why is there no macOS download?</summary><p>This release is Windows and Linux only.</p></details>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap">
-      Zaru Launcher 99.0.0 is a personal build based on <a href="https://github.com/millida/launcher">Millida Launcher</a>. It is not made, approved, or supported by Millida, and it is not affiliated with Mojang or Microsoft. Talk on <a href="https://discord.gg/Tfd7y4FjP" target="_blank" rel="noopener noreferrer">Discord</a>.
+    <div class="wrap foot">
+      <span class="foot-brand"><img src="brand/zaru-mark.webp" width="28" height="28" alt="" aria-hidden="true">Zaru Launcher 99.0.0</span>
+      <p>A personal build based on <a href="https://github.com/millida/launcher" target="_blank" rel="noopener noreferrer">Millida Launcher</a>, GPL-3.0. Not made, approved or supported by Millida, and not affiliated with Mojang or Microsoft. Talk on <a href="https://discord.gg/Tfd7y4FjP" target="_blank" rel="noopener noreferrer">Discord</a>.</p>
     </div>
   </footer>
+
   <script>
     document.querySelectorAll(".nav-links a").forEach(function (link) {
       link.addEventListener("click", function () {
@@ -666,6 +782,24 @@
         if (box) box.checked = false;
       });
     });
+
+    // Reveals only ever ADD an entrance. Nothing starts hidden, so if this
+    // observer never fires the page is simply already there.
+    (function () {
+      var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var items = document.querySelectorAll(".open, .up-in, .stagger");
+      if (calm || !("IntersectionObserver" in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+        });
+      }, { rootMargin: "0px 0px -10% 0px", threshold: .12 });
+      items.forEach(function (el) {
+        // whatever is already on screen at load stays put: no flash of an entrance
+        if (el.getBoundingClientRect().top < window.innerHeight * .9) return;
+        io.observe(el);
+      });
+    })();
   </script>
 </body>
 </html>
