@@ -8,54 +8,54 @@
   <meta property="og:title" content="Zaru Launcher">
   <meta property="og:description" content="Minecraft, ready to play. Microsoft account or a nickname. Windows and Linux.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#07110c">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2307110c'/%3E%3Cpath d='M7 8h12v5H14v3h5v5h-5v3H7V8z' fill='%23c6f54e'/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#e7f0e4">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231c7a3d'/%3E%3Cpath d='M8 8h11v4h-6v3h6v4h-6v5H8V8z' fill='%23f4fff6'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@560;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #07110c;
-      --bg-raise: #0d1913;
-      --card: rgba(16, 32, 24, 0.86);
-      --line: rgba(198, 245, 78, 0.16);
-      --line-strong: rgba(243, 247, 239, 0.12);
-      --lime: #c6f54e;
-      --lime-deep: #10240a;
-      --text: #f4f7ef;
-      --muted: #a9b8a6;
-      --warn: #f3d48a;
-      --warn-bg: rgba(243, 212, 138, 0.08);
-      --shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      --paper: #e7f0e4;
+      --sheet: #f7faf4;
+      --ink: #1a2b22;
+      --muted: #4c6156;
+      --line: #c9d9c8;
+      --green: #1c7a3d;
+      --green-deep: #145c2e;
+      --on-green: #f4fff6;
+      --sand: #f8f1d8;
+      --sand-ink: #6a5214;
+      --shadow: 0 18px 40px rgba(28, 70, 40, 0.12);
       --nav: 72px;
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; color-scheme: light; }
     body {
       margin: 0;
-      color: var(--text);
+      color: var(--ink);
       background:
-        radial-gradient(900px 480px at 85% -10%, rgba(198, 245, 78, 0.16), transparent 55%),
-        radial-gradient(700px 420px at -10% 20%, rgba(40, 110, 70, 0.35), transparent 50%),
-        var(--bg);
-      font-family: Outfit, "Segoe UI", sans-serif;
-      font-size: 17px;
+        radial-gradient(720px 360px at 100% -10%, rgba(28, 122, 61, 0.16), transparent 60%),
+        var(--paper);
+      font-family: "Source Sans 3", "Segoe UI", sans-serif;
+      font-size: 1.125rem;
       line-height: 1.5;
-    }
-    body::before {
-      content: "";
-      pointer-events: none;
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 75%);
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
     a { color: inherit; }
-    img { max-width: 100%; }
-    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .skip {
+      position: absolute;
+      left: 12px;
+      top: -40px;
+      background: var(--green);
+      color: var(--on-green);
+      padding: 8px 12px;
+      border-radius: 8px;
+      z-index: 30;
+    }
+    .skip:focus { top: 12px; }
+    .wrap { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
     .nav {
       position: sticky;
       top: 0;
@@ -63,226 +63,165 @@
       height: var(--nav);
       display: flex;
       align-items: center;
-      backdrop-filter: blur(16px);
-      background: rgba(7, 17, 12, 0.72);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(231, 240, 228, 0.92);
+      border-bottom: 1px solid var(--line);
     }
-    .nav .wrap { display: flex; align-items: center; }
+    .nav .wrap { display: flex; align-items: center; gap: 28px; width: min(1080px, calc(100% - 40px)); }
     .brand {
       display: flex;
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      font-family: Syne, Outfit, sans-serif;
-      font-weight: 800;
+      font-family: "Familjen Grotesk", "Source Sans 3", sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
       letter-spacing: -0.03em;
     }
     .mark {
-      width: 28px;
-      height: 28px;
-      margin-right: 10px;
+      width: 32px;
+      height: 32px;
       border-radius: 8px;
-      background: var(--lime);
-      color: var(--lime-deep);
-      display: inline-block;
-      text-align: center;
-      line-height: 28px;
-      font-weight: 800;
+      background: var(--green);
+      color: var(--on-green);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
     }
-    .nav-links { display: flex; margin-left: auto; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; margin-left: 22px; }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links { display: flex; gap: 22px; margin-left: auto; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .nav-links a:hover { color: var(--ink); }
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
       min-height: 48px;
       padding: 0 18px;
       border-radius: 999px;
       text-decoration: none;
       font-weight: 700;
       border: 1px solid transparent;
+      white-space: nowrap;
     }
-    .btn-lime { background: var(--lime); color: var(--lime-deep); }
-    .btn-lime:hover { background: #d6ff78; }
-    .btn-ghost { background: transparent; color: var(--text); border-color: var(--line-strong); }
-    .btn-ghost:hover { border-color: var(--lime); }
-    .btn-nav { min-height: 40px; padding: 0 14px; margin-left: 22px; font-size: 14px; }
-    .hero { padding: 72px 0 36px; }
-    .hero-grid { display: flex; flex-wrap: wrap; align-items: center; }
-    .hero-grid > div:first-child { flex: 1 1 480px; margin-right: 48px; }
-    .hero-grid > .panel { flex: 1 1 380px; }
-    .eyebrow {
-      display: inline-flex;
+    .btn:focus-visible, .nav-links a:focus-visible, summary:focus-visible, .brand:focus-visible {
+      outline: 3px solid var(--green);
+      outline-offset: 3px;
+    }
+    .btn-fill { background: var(--green); color: var(--on-green); }
+    .btn-fill:hover { background: var(--green-deep); }
+    .btn-line { background: var(--sheet); color: var(--ink); border-color: var(--line); }
+    .btn-line:hover { border-color: var(--green); }
+    h1, h2, h3 {
+      font-family: "Familjen Grotesk", "Source Sans 3", sans-serif;
+      letter-spacing: -0.03em;
+      margin: 0;
+      text-wrap: balance;
+    }
+    h1 { font-size: clamp(2.75rem, 6vw, 4.75rem); line-height: 0.95; font-weight: 700; }
+    h2 { font-size: clamp(2rem, 3vw, 2.75rem); line-height: 1.05; }
+    h3 { font-size: 1.45rem; line-height: 1.2; }
+    .hero { padding: 64px 0 28px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 40px;
       align-items: center;
-      gap: 8px;
-      margin: 0 0 18px;
-      padding: 6px 10px 6px 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--lime);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
     }
-    .pulse {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--lime);
-      box-shadow: 0 0 0 4px rgba(198, 245, 78, 0.15);
-    }
-    h1, h2, h3 { font-family: Syne, Outfit, sans-serif; letter-spacing: -0.04em; margin: 0; }
-    h1 { font-size: clamp(48px, 6vw, 76px); line-height: 0.92; font-weight: 800; }
-    .lede { margin: 20px 0 0; max-width: 38rem; color: var(--muted); font-size: 18px; }
-    .cta-row { display: flex; flex-wrap: wrap; margin-top: 28px; }
-    .cta-row .btn { margin: 0 12px 12px 0; }
-    .meta { margin: 14px 0 0; color: var(--muted); font-size: 14px; }
-    .panel {
-      background: linear-gradient(180deg, rgba(22, 42, 30, 0.95), rgba(10, 20, 15, 0.95));
-      border: 1px solid var(--line);
+    .lede { margin: 16px 0 0; max-width: 38rem; color: var(--muted); font-size: 1.2rem; text-wrap: pretty; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .meta { margin: 14px 0 0; color: var(--muted); font-size: 0.95rem; }
+    .play-card {
+      background: var(--green);
+      color: var(--on-green);
       border-radius: 28px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    .panel-top {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-    .dots { display: flex; gap: 6px; }
-    .dots i { width: 8px; height: 8px; border-radius: 50%; background: #2a3b30; display: block; }
-    .dots i:first-child { background: var(--lime); }
-    .panel-body { padding: 22px; display: grid; gap: 14px; }
-    .account, .instance, .play {
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    .account, .instance { padding: 14px 16px; background: rgba(0,0,0,0.22); }
-    .kicker { display: block; color: var(--muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .account strong, .instance strong { display: block; margin-top: 4px; font-size: 18px; }
-    .play {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 18px;
-      background: linear-gradient(180deg, #d8ff73, var(--lime));
-      color: var(--lime-deep);
-    }
-    .play b { font-family: Syne, sans-serif; font-size: 28px; letter-spacing: -0.04em; }
-    .play span { font-size: 13px; font-weight: 700; }
-    .strip { padding: 10px 0 20px; }
-    .strip-row {
-      display: flex;
-      flex-wrap: wrap;
-      border: 1px solid var(--line-strong);
-      border-radius: 18px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.02);
-    }
-    .strip-row div { flex: 1 1 220px; padding: 18px 20px; border-right: 1px solid var(--line-strong); }
-    .strip-row b { display: block; font-size: 15px; }
-    .strip-row span { color: var(--muted); font-size: 13px; }
-    section { padding: 72px 0; }
-    .section-head { max-width: 640px; margin-bottom: 28px; }
-    .section-head p { margin: 12px 0 0; color: var(--muted); }
-    h2 { font-size: clamp(32px, 4vw, 48px); line-height: 1; }
-    .cards { display: flex; flex-wrap: wrap; }
-    .cards .card { flex: 1 1 46%; max-width: calc(50% - 16px); margin: 0 16px 16px 0; }
-    .card {
-      padding: 24px;
-      border-radius: 22px;
-      background: var(--card);
-      border: 1px solid var(--line-strong);
-    }
-    .card h3 { font-size: 24px; margin-bottom: 8px; }
-    .card p { margin: 0; color: var(--muted); }
-    .index {
-      width: 36px;
-      height: 36px;
-      margin-bottom: 16px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      background: rgba(198, 245, 78, 0.12);
-      color: var(--lime);
-      font-weight: 700;
-    }
-    .split { display: flex; flex-wrap: wrap; align-items: flex-start; }
-    .split > * { flex: 1 1 300px; margin-right: 28px; }
-    .list { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
-    .list li {
-      display: grid;
-      grid-template-columns: 18px 1fr;
-      gap: 12px;
-      padding: 16px 18px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line-strong);
-    }
-    .tick { color: var(--lime); font-weight: 800; }
-    .os-grid { display: flex; flex-wrap: wrap; }
-    .os { flex: 1 1 300px; margin: 0 16px 16px 0; }
-    .os {
+      min-height: 280px;
       padding: 28px;
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(198,245,78,0.08), rgba(255,255,255,0.02));
-      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      min-height: 260px;
+      justify-content: space-between;
     }
-    .os .btn { margin-top: auto; align-self: flex-start; }
-    .os p { margin: 0; color: var(--muted); }
-    .steps { display: flex; flex-wrap: wrap; }
-    .step { flex: 1 1 200px; margin: 0 14px 14px 0; }
-    .step {
-      padding: 20px;
+    .play-card p { margin: 0; opacity: 0.85; font-weight: 600; }
+    .play-card strong {
+      display: block;
+      margin-top: 8px;
+      font-family: "Familjen Grotesk", sans-serif;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+    }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      margin: 28px auto 8px;
+    }
+    .facts div { background: var(--sheet); padding: 16px 18px; }
+    .facts b { display: block; font-size: 1rem; }
+    .facts span { color: var(--muted); font-size: 0.92rem; }
+    section { padding: 64px 0; scroll-margin-top: calc(var(--nav) + 12px); }
+    .section-head { max-width: 40rem; margin-bottom: 22px; }
+    .section-head p { margin: 10px 0 0; color: var(--muted); text-wrap: pretty; }
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card {
+      background: var(--sheet);
+      border: 1px solid var(--line);
       border-radius: 20px;
-      background: var(--bg-raise);
-      border: 1px solid var(--line-strong);
+      padding: 22px;
     }
-    .step b { display: block; color: var(--lime); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    .card p { margin: 8px 0 0; color: var(--muted); }
+    .list { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+    .list li {
+      background: var(--sheet);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 18px;
+    }
+    .os-grid, .steps { display: grid; gap: 14px; }
+    .os-grid { grid-template-columns: 1fr 1fr; }
+    .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .os, .step {
+      background: var(--sheet);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+    }
+    .os { display: flex; flex-direction: column; gap: 8px; min-height: 230px; }
+    .os p, .step p { margin: 0; color: var(--muted); }
+    .os .btn { margin-top: auto; align-self: flex-start; }
+    .kicker { color: var(--green); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
     .note {
-      margin-top: 18px;
+      margin-top: 16px;
       padding: 16px 18px;
       border-radius: 16px;
-      background: var(--warn-bg);
-      color: var(--warn);
-      border: 1px solid rgba(243, 212, 138, 0.2);
+      background: var(--sand);
+      color: var(--sand-ink);
     }
-    details {
-      border-bottom: 1px solid var(--line-strong);
-      padding: 16px 0;
-    }
-    summary { cursor: pointer; font-weight: 600; font-size: 18px; }
-    details p { margin: 10px 0 0; color: var(--muted); max-width: 68ch; }
+    details { border-bottom: 1px solid var(--line); padding: 14px 0; }
+    summary { cursor: pointer; font-weight: 700; font-size: 1.15rem; }
+    details p { margin: 8px 0 0; color: var(--muted); max-width: 68ch; }
     footer {
-      padding: 28px 0 48px;
+      padding: 8px 0 40px;
       color: var(--muted);
-      font-size: 14px;
-      border-top: 1px solid var(--line-strong);
+      font-size: 0.95rem;
+      border-top: 1px solid var(--line);
     }
-    footer a { color: var(--text); }
+    footer .wrap { padding-top: 22px; }
+    footer a { color: var(--ink); }
     code { font-family: ui-monospace, Consolas, monospace; font-size: 0.92em; }
     @media (max-width: 860px) {
       .nav-links { display: none; }
-      .nav .wrap { justify-content: space-between; }
-      .nav .btn-nav { margin-left: 16px; }
-      .cards .card, .os { max-width: 100%; flex-basis: 100%; }
-      .hero-grid > div:first-child { margin-right: 0; }
+      .hero-grid, .facts, .cards, .os-grid, .steps { grid-template-columns: 1fr; }
       .hero { padding-top: 36px; }
-      h1 { font-size: 46px; }
-      .wrap { width: min(1120px, calc(100% - 28px)); }
+      .wrap, .nav .wrap { width: min(1080px, calc(100% - 28px)); }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -290,16 +229,16 @@
   </style>
 </head>
 <body>
+  <a class="skip" href="#top">Skip to content</a>
   <header class="nav">
     <div class="wrap">
-      <a class="brand" href="#top"><span class="mark">Z</span> Zaru</a>
+      <a class="brand" href="#top" translate="no"><span class="mark" aria-hidden="true">Z</span> Zaru</a>
       <nav class="nav-links" aria-label="Page">
         <a href="#features">Features</a>
         <a href="#play">How you play</a>
         <a href="#download">Download</a>
         <a href="#install">Install</a>
       </nav>
-      <a class="btn btn-lime btn-nav" href="#download">Download</a>
     </div>
   </header>
 
@@ -307,40 +246,29 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
-          <p class="eyebrow"><span class="pulse"></span> Windows and Linux · 99.0.0</p>
           <h1>Minecraft, ready to play.</h1>
           <p class="lede">Zaru Launcher fetches Java, the game, and a Fabric starter pack when you press Play. Use a Microsoft account if you own the game, or a nickname if you do not.</p>
           <div class="cta-row">
-            <a class="btn btn-lime" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
-            <a class="btn btn-ghost" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_amd64.deb">Download for Linux</a>
+            <a class="btn btn-fill" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
+            <a class="btn btn-line" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_amd64.deb">Download for Linux</a>
           </div>
-          <p class="meta">Windows setup about 57 MB · Linux .deb about 62 MB · No separate Java install</p>
+          <p class="meta">Version 99.0.0 · Windows setup about 57&nbsp;MB · Linux .deb about 62&nbsp;MB</p>
         </div>
-        <div class="panel" aria-hidden="true">
-          <div class="panel-top"><span class="dots"><i></i><i></i><i></i></span> Zaru Launcher</div>
-          <div class="panel-body">
-            <div class="account">
-              <span class="kicker">Game account</span>
-              <strong>Nickname or Microsoft</strong>
-            </div>
-            <div class="instance">
-              <span class="kicker">Start here</span>
-              <strong>Minecraft 1.21.11 · Fabric</strong>
-            </div>
-            <div class="play"><b>Play</b><span>Java included</span></div>
-          </div>
+        <div class="play-card">
+          <p>Start here · Minecraft 1.21.11 · Fabric</p>
+          <strong>Play</strong>
+          <p>Java comes with it</p>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="facts">
+          <div><b>Two ways in</b><span>Microsoft login, or a nickname</span></div>
+          <div><b>Java included</b><span>Downloaded when you press Play</span></div>
+          <div><b>Fabric starter</b><span>Sodium, Lithium, and more</span></div>
+          <div><b>Mods and skins</b><span>Catalog, wardrobe, friends</span></div>
         </div>
       </div>
     </section>
-
-    <div class="strip">
-      <div class="wrap strip-row">
-        <div><b>Two ways in</b><span>Microsoft login, or a nickname</span></div>
-        <div><b>Java included</b><span>Downloaded when you press Play</span></div>
-        <div><b>Fabric starter</b><span>Sodium, Lithium, and more</span></div>
-        <div><b>Mods and skins</b><span>Catalog, wardrobe, friends</span></div>
-      </div>
-    </div>
 
     <section id="features">
       <div class="wrap">
@@ -350,22 +278,18 @@
         </div>
         <div class="cards">
           <article class="card">
-            <div class="index">01</div>
             <h3>A game account, then Play.</h3>
             <p>The first screen asks how you will play. A licensed account uses Microsoft’s own device login. A nickname is enough for offline play. The password is typed on Microsoft’s site, not in Zaru.</p>
           </article>
           <article class="card">
-            <div class="index">02</div>
             <h3>A starter pack that already runs.</h3>
             <p>The default instance is Minecraft 1.21.11 on Fabric, with Sodium, Lithium, ImmediatelyFast, Entity Culling, More Culling, and Dynamic FPS already in the pack.</p>
           </article>
           <article class="card">
-            <div class="index">03</div>
             <h3>Mods, skins, and friends.</h3>
             <p>Browse mods and modpacks, change a skin, and invite people from the lobby. Friends, the wardrobe, and Millida’s own servers use their account when you want those.</p>
           </article>
           <article class="card">
-            <div class="index">04</div>
             <h3>No Java hunt.</h3>
             <p>You do not install Java yourself. Press Play and the launcher brings the runtime, libraries, and game files down before the world opens.</p>
           </article>
@@ -374,16 +298,16 @@
     </section>
 
     <section id="play">
-      <div class="wrap split">
+      <div class="wrap">
         <div class="section-head">
           <h2>How you play.</h2>
           <p>Pick one on the first screen. You can add the other later.</p>
         </div>
         <ul class="list">
-          <li><span class="tick">→</span><span><strong>Licensed.</strong> Microsoft shows a device code at microsoft.com/link. Zaru never asks for the Microsoft password.</span></li>
-          <li><span class="tick">→</span><span><strong>Offline.</strong> A nickname of 3 to 16 letters, digits, or underscores. That is enough to start a world. Realms and official servers will refuse it.</span></li>
-          <li><span class="tick">→</span><span><strong>Millida, when you want it.</strong> Skins, friends, parties, and Millida SMP still talk to Millida’s servers. Play itself does not wait on that sign-in.</span></li>
-          <li><span class="tick">→</span><span><strong>Your mods.</strong> Add Fabric or other packs from the catalog on top of the starter instance, and keep each build separate.</span></li>
+          <li><strong>Licensed.</strong> Microsoft shows a device code at microsoft.com/link. Zaru never asks for the Microsoft password.</li>
+          <li><strong>Offline.</strong> A nickname of 3 to 16 letters, digits, or underscores. That is enough to start a world. Realms and official servers will refuse it.</li>
+          <li><strong>Millida, when you want it.</strong> Skins, friends, parties, and Millida SMP still talk to Millida’s servers. Play itself does not wait on that sign-in.</li>
+          <li><strong>Your mods.</strong> Add Fabric or other packs from the catalog on top of the starter instance, and keep each build separate.</li>
         </ul>
       </div>
     </section>
@@ -398,14 +322,14 @@
           <article class="os">
             <span class="kicker">Windows</span>
             <h3>Setup installer</h3>
-            <p><code>Zaru.Launcher_99.0.0_x64-setup.exe</code><br>About 57 MB</p>
-            <a class="btn btn-lime" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
+            <p><code translate="no">Zaru.Launcher_99.0.0_x64-setup.exe</code><br>About 57&nbsp;MB</p>
+            <a class="btn btn-fill" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_x64-setup.exe">Download for Windows</a>
           </article>
           <article class="os">
             <span class="kicker">Linux</span>
             <h3>Debian package</h3>
-            <p><code>Zaru.Launcher_99.0.0_amd64.deb</code><br>About 62 MB · Ubuntu and Debian</p>
-            <a class="btn btn-ghost" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_amd64.deb">Download for Linux</a>
+            <p><code translate="no">Zaru.Launcher_99.0.0_amd64.deb</code><br>About 62&nbsp;MB · Ubuntu and Debian</p>
+            <a class="btn btn-line" href="https://github.com/abuzar310/zaru-site/releases/download/v99.0.0/Zaru.Launcher_99.0.0_amd64.deb">Download for Linux</a>
           </article>
         </div>
       </div>
@@ -417,10 +341,10 @@
           <h2>Install it, then press Play.</h2>
         </div>
         <div class="steps">
-          <article class="step"><b>Step 1</b>Download the file for your system.</article>
-          <article class="step"><b>Step 2</b>If the browser wraps it in a zip, unzip that first.</article>
-          <article class="step"><b>Step 3</b>Windows: run the setup exe. Linux: install the .deb, then open Zaru Launcher.</article>
-          <article class="step"><b>Step 4</b>Choose a nickname or Microsoft, then Play. The first launch downloads the game.</article>
+          <article class="step"><p class="kicker">Step 1</p><p>Download the file for your system.</p></article>
+          <article class="step"><p class="kicker">Step 2</p><p>If the browser wraps it in a zip, unzip that first.</p></article>
+          <article class="step"><p class="kicker">Step 3</p><p>Windows: run the setup exe. Linux: install the .deb, then open Zaru Launcher.</p></article>
+          <article class="step"><p class="kicker">Step 4</p><p>Choose a nickname or Microsoft, then Play. The first launch downloads the game.</p></article>
         </div>
         <p class="note">This installer is not code-signed. If Windows says it protected your PC, choose More info, then Run anyway. That warning is expected on this personal build.</p>
       </div>
