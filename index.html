@@ -8,25 +8,26 @@
   <meta property="og:title" content="Zaru Launcher">
   <meta property="og:description" content="Minecraft, ready to play. Microsoft account or a nickname. Windows and Linux.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#e7f0e4">
-  <meta name="color-scheme" content="light">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231c7a3d'/%3E%3Cpath d='M8 8h11v4h-6v3h6v4h-6v5H8V8z' fill='%23f4fff6'/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#0c0b10">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23d9ccff'/%3E%3Cpath d='M8 8h11v4h-6v3h6v4h-6v5H8V8z' fill='%23110e18'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@560;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --paper: #e7f0e4;
-      --sheet: #f7faf4;
-      --ink: #1a2b22;
-      --muted: #4c6156;
-      --line: #c9d9c8;
-      --green: #1c7a3d;
-      --green-deep: #145c2e;
-      --on-green: #f4fff6;
-      --sand: #f8f1d8;
-      --sand-ink: #6a5214;
-      --shadow: 0 18px 40px rgba(28, 70, 40, 0.12);
+      --paper: #0c0b10;
+      --sheet: #f7f5fc;
+      --ink: #f6f4fb;
+      --muted: #c9bddf;
+      --line: rgba(255, 255, 255, 0.14);
+      --card-ink: #16141c;
+      --card-muted: #5c5670;
+      --card-line: #e4dff2;
+      --lilac: #d9ccff;
+      --lilac-deep: #c4b2ff;
+      --on-lilac: #161222;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
       --nav: 72px;
     }
     * { box-sizing: border-box; }
@@ -35,7 +36,8 @@
       margin: 0;
       color: var(--ink);
       background:
-        radial-gradient(720px 360px at 100% -10%, rgba(28, 122, 61, 0.16), transparent 60%),
+        radial-gradient(820px 420px at 85% -8%, rgba(217, 204, 255, 0.42), transparent 58%),
+        radial-gradient(640px 380px at 0% 18%, rgba(255, 255, 255, 0.1), transparent 52%),
         var(--paper);
       font-family: "Source Sans 3", "Segoe UI", sans-serif;
       font-size: 1.125rem;
@@ -48,8 +50,8 @@
       position: absolute;
       left: 12px;
       top: -40px;
-      background: var(--green);
-      color: var(--on-green);
+      background: var(--lilac);
+      color: var(--on-lilac);
       padding: 8px 12px;
       border-radius: 8px;
       z-index: 30;
@@ -63,7 +65,7 @@
       height: var(--nav);
       display: flex;
       align-items: center;
-      background: rgba(231, 240, 228, 0.92);
+      background: rgba(12, 11, 16, 0.88);
       border-bottom: 1px solid var(--line);
     }
     .nav .wrap { display: flex; align-items: center; gap: 28px; width: min(1080px, calc(100% - 40px)); }
@@ -81,8 +83,8 @@
       width: 32px;
       height: 32px;
       border-radius: 8px;
-      background: var(--green);
-      color: var(--on-green);
+      background: var(--lilac);
+      color: var(--on-lilac);
       display: grid;
       place-items: center;
       font-weight: 700;
@@ -108,13 +110,13 @@
       white-space: nowrap;
     }
     .btn:focus-visible, .nav-links a:focus-visible, summary:focus-visible, .brand:focus-visible {
-      outline: 3px solid var(--green);
+      outline: 3px solid var(--lilac);
       outline-offset: 3px;
     }
-    .btn-fill { background: var(--green); color: var(--on-green); }
-    .btn-fill:hover { background: var(--green-deep); }
-    .btn-line { background: var(--sheet); color: var(--ink); border-color: var(--line); }
-    .btn-line:hover { border-color: var(--green); }
+    .btn-fill { background: var(--lilac); color: var(--on-lilac); }
+    .btn-fill:hover { background: var(--lilac-deep); }
+    .btn-line { background: #fff; color: var(--on-lilac); border-color: rgba(255, 255, 255, 0.7); }
+    .btn-line:hover { border-color: var(--lilac); }
     h1, h2, h3 {
       font-family: "Familjen Grotesk", "Source Sans 3", sans-serif;
       letter-spacing: -0.03em;
@@ -135,8 +137,8 @@
     .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
     .meta { margin: 14px 0 0; color: var(--muted); font-size: 0.95rem; }
     .play-card {
-      background: var(--green);
-      color: var(--on-green);
+      background: var(--lilac);
+      color: var(--on-lilac);
       border-radius: 28px;
       min-height: 280px;
       padding: 28px;
@@ -177,7 +179,9 @@
       border-radius: 20px;
       padding: 22px;
     }
-    .card p { margin: 8px 0 0; color: var(--muted); }
+    .card, .facts div, .list li, .os, .step { color: var(--card-ink); }
+    .card p, .facts span, .os p, .step p { color: var(--card-muted); }
+    .card, .list li, .os, .step { border-color: var(--card-line); }
     .list { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
     .list li {
       background: var(--sheet);
@@ -195,15 +199,16 @@
       padding: 22px;
     }
     .os { display: flex; flex-direction: column; gap: 8px; min-height: 230px; }
-    .os p, .step p { margin: 0; color: var(--muted); }
+    .os p, .step p { margin: 0; color: var(--card-muted); }
     .os .btn { margin-top: auto; align-self: flex-start; }
-    .kicker { color: var(--green); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .kicker { color: #6a4cc4; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
     .note {
       margin-top: 16px;
       padding: 16px 18px;
       border-radius: 16px;
-      background: var(--sand);
-      color: var(--sand-ink);
+      background: #f4f0ff;
+      color: #2a2140;
+      border: 1px solid #ddd4f5;
     }
     details { border-bottom: 1px solid var(--line); padding: 14px 0; }
     summary { cursor: pointer; font-weight: 700; font-size: 1.15rem; }
